@@ -1,54 +1,56 @@
-# React + TypeScript + Vite
+# PennyTrack ✨💰
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+PennyTrack is a modern and efficient personal expense management application built with React, Redux Toolkit, and Supabase. It helps users track their income, expenses, and budget insights through an intuitive dashboard.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+✅ Add, edit, and delete transactions (income & expenses)
 
-## Expanding the ESLint configuration
+📊 Visual analytics with charts (expense breakdown, income vs. expenses, etc.)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+🔄 Persistent state with Redux Persist (LocalStorage support)
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+🔐 User authentication with Supabase (Signup, Login, Logout)
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+🎨 Modern UI with Tailwind CSS
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+🔎 Search, filter, and categorize transactions
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+🌙 Dark mode support
+
+## 🛠️ Technologies Used
+
+React (Vite + TypeScript) – Frontend framework
+
+Redux Toolkit + Redux Persist – State management
+
+React Query – Data fetching & caching
+
+Supabase – Backend as a Service (Auth & Database)
+
+Axios – HTTP requests
+
+Tailwind CSS – Styling
+
+Recharts.js – Charts & analytics
+
+Jest + React Testing Library – Unit and integration testing
+
+## 📥 Installation & Setup
+
+To get started with PennyTrack, follow these steps:
+
+    Clone the repository
+    git clone https://github.com/frau-azadeh/penny-track.git
+    cd penny-track
+
+    Install dependencies
+    npm install
+
+    Start the development server
+    npm run dev
+
+## 🤝 Contributing
+  Contributions are welcome! Feel free to submit a pull request or open an issue.
+
+  Developed with 🌻 by Azadeh Sharifi Soltani Feel free to connect and collaborate!
