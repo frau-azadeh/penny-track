@@ -51,6 +51,7 @@ To get started with PennyTrack, follow these steps:
     npm run dev
 
 ## 🤝 Contributing
-  Contributions are welcome! Feel free to submit a pull request or open an issue.
 
-  Developed with 🌻 by Azadeh Sharifi Soltani Feel free to connect and collaborate!
+Contributions are welcome! Feel free to submit a pull request or open an issue.
+
+Developed with 🌻 by Azadeh Sharifi Soltani Feel free to connect and collaborate!
