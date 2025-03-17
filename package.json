@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.6.1",
+    "@supabase/supabase-js": "^2.49.1",
     "@tailwindcss/vite": "^4.0.14",
     "@tanstack/react-query": "^5.68.0",
     "prettier": "^3.5.3",
