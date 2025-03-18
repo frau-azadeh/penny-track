@@ -23,6 +23,7 @@
     "react-icons": "^5.5.0",
     "react-redux": "^9.2.0",
     "recharts": "^2.15.1",
+    "redux-persist": "^6.0.0",
     "tailwindcss": "^4.0.14"
   },
   "devDependencies": {
