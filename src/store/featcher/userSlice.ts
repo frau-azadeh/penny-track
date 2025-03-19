@@ -27,8 +27,12 @@ const userSlice = createSlice({
             }
             state.users.push(nweUser);
         },
-        updateUser:()=>{
-
+        updateUser:(state, action: PayloadAction<{id: string; name: string; email:string}>)=>{
+            const user = state.users.find((user)=> user.id === action.payload.id);
+            if(user){
+                user.name = action.payload.name;
+                user.email = action.payload.email;
+            }
         },
         deleteUser:()=>{
 
