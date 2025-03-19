@@ -7,16 +7,16 @@ const persistConfig = {
     storage,
 }
 
-const persistedUserReducer = persistReducer(persistConfig, userReducer)
+const persistedUserReducer = persistReducer(persistConfig, useReducer)
 
-export const store = configureStore ({
+export const store = configureStore({
     reducer:{
         users: persistedUserReducer,
     },
-devTools: process.env.NODE_ENV !== "production"
+    devTools: process.env.NODE_ENV !== "production"
 })
 
 export const persistor = persistStore(store)
 
-export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch;
+export type RootStore = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
