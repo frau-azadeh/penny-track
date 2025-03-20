@@ -1,7 +1,15 @@
 import "./App.css";
+import { Button } from "./components/ui";
 
 function App() {
-  return <h1 className="bg-blue-800">مدیریت خرید</h1>;
+  return (
+    <div className="flex flex-col items-center m-2">
+      <h1>Happy new year</h1>
+      <Button variant="primary" onClick={() => alert("happy new year")}>
+        click me!
+      </Button>
+    </div>
+  );
 }
 
 export default App;

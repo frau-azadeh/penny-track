@@ -7,6 +7,7 @@ const persistConfig = {
   key: "users",
   storage,
 };
+
 const persistedUserReducer = persistReducer(persistConfig, useReducer);
 
 export const store = configureStore({

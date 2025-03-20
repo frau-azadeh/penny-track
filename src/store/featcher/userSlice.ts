@@ -14,7 +14,7 @@ const initialState: UserState = {
   users: [],
 };
 
-const userSlice = createSlice({
+export const userSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
@@ -22,12 +22,12 @@ const userSlice = createSlice({
       state,
       action: PayloadAction<{ name: string; email: string }>,
     ) => {
-      const nweUser: User = {
+      const newUser: User = {
         id: uuidv4(),
         name: action.payload.name,
         email: action.payload.email,
       };
-      state.users.push(nweUser);
+      state.users.push(newUser);
     },
     updateUser: (
       state,
@@ -35,8 +35,8 @@ const userSlice = createSlice({
     ) => {
       const user = state.users.find((user) => user.id === action.payload.id);
       if (user) {
-        user.name = action.payload.name;
         user.email = action.payload.email;
+        user.name = action.payload.name;
       }
     },
     deleteUser: (state, action: PayloadAction<string>) => {
