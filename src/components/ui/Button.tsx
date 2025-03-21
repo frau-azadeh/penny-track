@@ -1,7 +1,7 @@
 import React, { ButtonHTMLAttributes } from "react";
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>{
-  variant?: "primary" | "secondary" | "danger"; 
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: "primary" | "secondary" | "danger";
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -21,7 +21,6 @@ const Button: React.FC<ButtonProps> = ({
 
   return (
     <button
-      
       className={`${baseStyles} ${variantStyles[variant]} ${className || ""}`}
       {...rest}
     >
