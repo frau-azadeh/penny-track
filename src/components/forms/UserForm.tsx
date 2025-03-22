@@ -1,31 +1,34 @@
-import { useForm,SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { Button, Input } from "../ui";
 
-interface UserFormValues{
+interface UserFormValues {
   username: string;
   email: string;
 }
 
-interface UserFormProps{
+interface UserFormProps {
   onSubmit: (data: UserFormValues) => void;
   defaultValues?: UserFormValues;
 }
 
-const UserForm:React.FC<UserFormProps> = ({onSubmit, defaultValues}) => {
-  const{
+const UserForm: React.FC<UserFormProps> = ({ onSubmit, defaultValues }) => {
+  const {
     register,
     handleSubmit,
-    formState:{errors},
-  } = useForm <UserFormValues>({
+    formState: { errors },
+  } = useForm<UserFormValues>({
     defaultValues,
   });
 
-  const submitHandler: SubmitHandler<UserFormValues>=(data) => {
+  const submitHandler: SubmitHandler<UserFormValues> = (data) => {
     onSubmit(data);
   };
 
   return (
-    <form onSubmit={handleSubmit(submitHandler)} className="space-y-4 bg-white p-6 rounded-lg shadow-md">
+    <form
+      onSubmit={handleSubmit(submitHandler)}
+      className="space-y-4 bg-white p-6 rounded-lg shadow-md"
+    >
       <h2 className="text-lg font-blod text-gray-700">User Form</h2>
       <Input
         label="Username"
@@ -35,7 +38,7 @@ const UserForm:React.FC<UserFormProps> = ({onSubmit, defaultValues}) => {
         placeholder="Enter your name:"
         className="w-full"
       />
-      <Input 
+      <Input
         label="email"
         name="email"
         type="email"
@@ -43,13 +46,12 @@ const UserForm:React.FC<UserFormProps> = ({onSubmit, defaultValues}) => {
         error={errors.email}
         placeholder="Enter your email"
         className="w-full"
-
       />
       <Button type="submit" variant="primary" className="w-full">
         {defaultValues ? "update user" : "add user"}
       </Button>
     </form>
-  )
-}
+  );
+};
 
-export default UserForm
+export default UserForm;
