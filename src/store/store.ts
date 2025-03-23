@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit"
+import {configureStore} from "@reduxjs/toolkit"
 import {persistStore, persistReducer} from "redux-persist"
 import storage from "redux-persist/lib/storage"
 import useReducer from "./featcher/userSlice"
@@ -8,9 +8,9 @@ const persistConfig = {
   storage,
 }
 
-const persistedUserReducer = persistReducer(persistConfig,useReducer)
+const persistedUserReducer = persistReducer(persistConfig, useReducer)
 
-export const store = configureStore({
+export const store = configureStore ({
   reducer:{
     users: persistedUserReducer
   },
@@ -19,5 +19,5 @@ export const store = configureStore({
 
 export const persistor = persistStore(store)
 
-export type RootState = ReturnType<typeof store.getState>
+export type RootState =ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
