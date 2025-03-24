@@ -4,7 +4,7 @@ import { FieldError, FieldValues, UseFormRegister,Path } from "react-hook-form";
 interface InputProps <T extends FieldValues> extends InputHTMLAttributes<HTMLInputElement>{
   label: string;
   error?: FieldError;
-  registor: UseFormRegister<T>;
+  register: UseFormRegister<T>;
   name: Path<T>
 }
 
@@ -14,7 +14,7 @@ const Input = <T extends FieldValues>({
   name,
   error,
   className,
-  registor,
+  register,
   ...rest
 }: InputProps<T>) => {
   return (
@@ -22,7 +22,7 @@ const Input = <T extends FieldValues>({
       <label htmlFor={name as string}>{label}</label>
       <input
         id= {name as string}
-        {...registor(name as Path<T>)}
+        {...register(name as Path<T>)}
         {...rest}
         className={`px-4 py-2 rounded-lg focus:outline-none focus:ring-2 ${
           error 
