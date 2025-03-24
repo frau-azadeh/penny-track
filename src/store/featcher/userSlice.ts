@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
+
 interface User {
   id: string;
   name: string;
@@ -45,5 +46,5 @@ export const userSlice = createSlice({
   },
 });
 
-export const { addUser, updateUser, deleteUser } = userSlice.actions;
+export const { addUser, deleteUser, updateUser } = userSlice.actions;
 export default userSlice.reducer;
