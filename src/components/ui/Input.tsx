@@ -2,24 +2,24 @@ import { InputHTMLAttributes } from "react";
 import {
   FieldError,
   FieldValues,
-  Path,
   UseFormRegister,
+  Path,
 } from "react-hook-form";
 
 interface InputProps<T extends FieldValues>
   extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
-  name: Path<T>;
-  register: UseFormRegister<T>;
   error?: FieldError;
+  register: UseFormRegister<T>;
+  name: Path<T>;
 }
 
 const Input = <T extends FieldValues>({
   label,
   name,
-  register,
-  className,
   error,
+  className,
+  register,
   ...rest
 }: InputProps<T>) => {
   return (
@@ -33,10 +33,11 @@ const Input = <T extends FieldValues>({
           error
             ? "border-red-500 focus: ring-red-500"
             : "border-gray-300 focus:ring-blue-500"
-        } ${className || ""}`}
+        }${className || ""}`}
       />
       {error && <p className="text-red-500 text-sm">{error.message}</p>}
     </div>
   );
 };
+
 export default Input;

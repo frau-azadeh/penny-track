@@ -1,15 +1,16 @@
-import { SubmitHandler, useForm } from "react-hook-form";
+import React from "react";
 import { Button, Input } from "../ui";
-interface UserFormValues {
-  username: string;
+import { SubmitHandler, useForm } from "react-hook-form";
+
+export interface UserFormValues {
+  name: string;
   email: string;
 }
 
 interface UserFormProps {
   onSubmit: (data: UserFormValues) => void;
-  defaultValues: UserFormValues;
+  defaultValues?: UserFormValues;
 }
-
 const UserForm: React.FC<UserFormProps> = ({ onSubmit, defaultValues }) => {
   const {
     register,
@@ -30,18 +31,18 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit, defaultValues }) => {
     >
       <h2 className="text-lg font-bold text-gray-700">User Form</h2>
       <Input
-        label="Username"
-        name="username"
+        label="name"
+        name="name"
         register={register}
-        error={errors.username}
-        placeholder="Enter your name:"
+        error={errors.name}
+        placeholder="Enter your username"
         className="w-full"
       />
       <Input
         label="email"
         name="email"
         type="email"
-        placeholder="Enter your email:"
+        placeholder="Enter your email"
         className="w-full"
         error={errors.email}
         register={register}
