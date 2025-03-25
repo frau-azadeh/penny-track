@@ -14,6 +14,10 @@ export const store = configureStore({
   reducer: {
     users: persistedUserReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false, 
+    }),
   devTools: process.env.NODE_ENV !== "production",
 });
 

@@ -11,7 +11,7 @@ const Modal:React.FC<ModalProps> = ({isOpen, onClose, children}) => {
     <div className='fixed inset-0 z-50 flex items-center justify-center'>
         <div className='absolute inset-0' onClick={onClose}/>
             <div className='relative z-10 bg-white rounded-xl shadow-xl w-full max-w-md mx-4'
-                onClick={(e) =>e.stopPropagation}
+                onClick={(e) =>e.stopPropagation()}
             >
                 {children}
             </div>

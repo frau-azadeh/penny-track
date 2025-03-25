@@ -2,14 +2,14 @@ import React from 'react'
 import { Button, Input } from '../ui'
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-interface UserFormValues {
-  username: string;
+export interface UserFormValues {
+  name: string;
   email: string;
 }
 
 interface UserFormProps {
   onSubmit: (data: UserFormValues) => void;
-  defaultValues: UserFormValues;
+  defaultValues?: UserFormValues;
 }
 const UserForm:React.FC<UserFormProps> = ({onSubmit, defaultValues}) => {
   const {
@@ -30,10 +30,10 @@ const UserForm:React.FC<UserFormProps> = ({onSubmit, defaultValues}) => {
     >
       <h2 className='text-lg font-bold text-gray-700'>User Form</h2>
       <Input
-        label='Username'
-        name='username'
+        label='name'
+        name='name'
         register={register}
-        error={errors.username}
+        error={errors.name}
         placeholder='Enter your username'
         className='w-full'
       />
