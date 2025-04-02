@@ -1,13 +1,13 @@
-import { InputHTMLAttributes } from "react";
+import { InputHTMLAttributes } from "react"
 import {
-  FieldError,
-  FieldValues,
-  Path,
-  UseFormRegister,
-} from "react-hook-form";
+   FieldError,
+   UseFormRegister, 
+   FieldValues, 
+   Path
+  } from "react-hook-form"
 
 interface InputProps<T extends FieldValues>
-  extends InputHTMLAttributes<HTMLInputElement> {
+ extends InputHTMLAttributes<HTMLInputElement>{
   label: string;
   error?: FieldError;
   register: UseFormRegister<T>;
@@ -17,11 +17,11 @@ interface InputProps<T extends FieldValues>
 const Input = <T extends FieldValues>({
   label,
   name,
-  error,
   className,
   register,
+  error,
   ...rest
-}: InputProps<T>) => {
+}:InputProps<T>) => {
   return (
     <div>
       <label htmlFor={name as string}>{label}</label>
@@ -29,15 +29,15 @@ const Input = <T extends FieldValues>({
         id={name as string}
         {...register(name as Path<T>)}
         {...rest}
-        className={`px-4 py-2 rounded-lg focus:outline-none focus:ring-2 ${
+        className={`px-4 pv-2 rounded-lg focus:outline-none focus:ring-2 ${
           error
-            ? "border-red-500 focus:ring-red-500"
-            : "border-gray-300 focus:ring-blue-500"
+          ? "border-red-500 focus:ring-red-500"
+          : "border-gray-300 focus:ring-gray-300"
         }${className || ""}`}
       />
       {error && <p className="text-red-500 text-sm">{error.message}</p>}
     </div>
-  );
-};
+  )
+}
 
-export default Input;
+export default Input
