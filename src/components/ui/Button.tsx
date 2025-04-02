@@ -1,10 +1,10 @@
-import React, { ButtonHTMLAttributes } from 'react'
+import React, { ButtonHTMLAttributes } from "react";
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>{
-  variant?: "primary" | "secondray" | "danger"
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: "primary" | "secondray" | "danger";
 }
 
-const Button: React.FC <ButtonProps> = ({
+const Button: React.FC<ButtonProps> = ({
   children,
   className,
   variant = "primary",
@@ -18,13 +18,13 @@ const Button: React.FC <ButtonProps> = ({
     danger: "bg-red-600 text-white hover: bg-red-900",
   };
   return (
-    <button 
+    <button
       className={`${baseStyle} ${variantStyle[variant]} ${className || ""}`}
       {...rest}
     >
       {children}
     </button>
-  )
-}
+  );
+};
 
-export default Button
+export default Button;
