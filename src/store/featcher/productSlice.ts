@@ -8,6 +8,7 @@ export interface Product {
   quantity: number;
   description: string;
   date: string;
+  category: string;
 }
 
 interface ProductState {
@@ -32,6 +33,7 @@ export const productSlice = createSlice({
         quantity: number;
         date: string;
         description: string;
+        category: string;  
       }>,
     ) => {
       const newProduct: Product = {
@@ -41,6 +43,7 @@ export const productSlice = createSlice({
         quantity: action.payload.quantity,
         date: action.payload.date,
         description: action.payload.description,
+        category: action.payload.category,
       };
       state.products.push(newProduct);
     },
@@ -53,6 +56,7 @@ export const productSlice = createSlice({
         quantity: number;
         date: string;
         description: string;
+        category: string;
       }>,
     ) => {
       const product = state.products.find((p) => p.id === action.payload.id);
@@ -62,6 +66,7 @@ export const productSlice = createSlice({
         product.quantity = action.payload.quantity;
         product.date = action.payload.date;
         product.description = action.payload.description;
+        product.category = action.payload.category;
       }
     },
     deleteProduct: (state, action: PayloadAction<string>) => {
