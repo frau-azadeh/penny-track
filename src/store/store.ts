@@ -1,17 +1,20 @@
 import { persistReducer, persistStore } from "redux-persist";
 import { configureStore } from "@reduxjs/toolkit";
 import storage from "redux-persist/lib/storage";
-import useReducer from "./featcher/userSlice";
+import userReducer from "./featcher/userSlice";
+import expenseReduser from "./featcher/expenseSlice"
 const persistConfig = {
   key: "users",
   storage,
 };
 
-const persistedUserReducer = persistReducer(persistConfig, useReducer);
+const persistedUserReducer = persistReducer(persistConfig, userReducer);
+const persistedExpenseReducer = persistReducer(persistConfig, expenseReduser)
 
 export const store = configureStore({
   reducer: {
-    name: persistedUserReducer,
+    users: persistedUserReducer,
+    expenses: persistedExpenseReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
