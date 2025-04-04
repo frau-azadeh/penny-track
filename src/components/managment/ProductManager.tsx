@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useTransition, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { Product, addProduct, updateProduct, deleteProduct } from "../../store/featcher/productSlice";
@@ -15,6 +15,7 @@ const ProductManager: React.FC = () => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isPending, startTransition] = useTransition();
 
   // 📝 استفاده از useMemo برای فیلتر کردن محصولات
   const filteredProducts = useMemo(() => {
@@ -31,42 +32,43 @@ const ProductManager: React.FC = () => {
     return filteredProducts.slice(startIndex, startIndex + ITEMS_PER_PAGE);
   }, [filteredProducts, currentPage]);
 
-  // تغییر صفحه
-  const handlePageChange = (newPage: number) => {
-    setCurrentPage(newPage);
-  };
+  // 📄 تغییر صفحه (استفاده از useCallback برای بهینه‌سازی)
+  const handlePageChange = useCallback((newPage: number) => {
+    startTransition(() => {
+      setCurrentPage(newPage);
+    });
+  }, []);
 
-  // باز کردن مودال برای افزودن یا ویرایش
-  const handleOpenModal = (product?: Product) => {
-    if (product) setSelectedProduct(product);
-    else setSelectedProduct(null);
+  // 📂 باز کردن مودال برای افزودن یا ویرایش
+  const handleOpenModal = useCallback((product?: Product) => {
+    setSelectedProduct(product || null);
     setIsModalOpen(true);
-  };
+  }, []);
 
-  // بستن مودال
-  const handleCloseModal = () => {
+  // ✖️ بستن مودال
+  const handleCloseModal = useCallback(() => {
     setSelectedProduct(null);
     setIsModalOpen(false);
-  };
+  }, []);
 
-  // مدیریت افزودن محصول
-  const handleAddProduct = (data: ProductFormValues) => {
+  // ➕ مدیریت افزودن محصول
+  const handleAddProduct = useCallback((data: ProductFormValues) => {
     dispatch(addProduct(data));
     handleCloseModal();
-  };
+  }, [dispatch, handleCloseModal]);
 
-  // مدیریت ویرایش محصول
-  const handleUpdateProduct = (data: ProductFormValues) => {
+  // ✏️ مدیریت ویرایش محصول
+  const handleUpdateProduct = useCallback((data: ProductFormValues) => {
     if (selectedProduct) {
       dispatch(updateProduct({ id: selectedProduct.id, ...data }));
       handleCloseModal();
     }
-  };
+  }, [dispatch, selectedProduct, handleCloseModal]);
 
-  // مدیریت حذف محصول
-  const handleDeleteProduct = (id: string) => {
+  // 🗑️ مدیریت حذف محصول
+  const handleDeleteProduct = useCallback((id: string) => {
     dispatch(deleteProduct(id));
-  };
+  }, [dispatch]);
 
   return (
     <div className="p-4 space-y-4">
@@ -77,14 +79,19 @@ const ProductManager: React.FC = () => {
         </Button>
       </div>
 
-      {/* 📝 جستجو */}
+      {/* 🔍 جستجو */}
       <input
         type="text"
         placeholder="Search by name or description..."
         value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
+        onChange={(e) => {
+          startTransition(() => {
+            setSearchQuery(e.target.value);
+          });
+        }}
         className="border px-2 py-1 rounded-md mb-4 w-full"
       />
+      {isPending && <p className="text-gray-500">Loading...</p>}
 
       {paginatedProducts.length === 0 ? (
         <p className="text-gray-500">No products found.</p>
@@ -122,7 +129,7 @@ const ProductManager: React.FC = () => {
         </table>
       )}
 
-      {/* 📝 صفحه‌بندی */}
+      {/* 📄 صفحه‌بندی */}
       <div className="flex justify-center space-x-2 mt-4">
         {Array.from({ length: Math.ceil(filteredProducts.length / ITEMS_PER_PAGE) }).map((_, index) => (
           <Button
@@ -135,7 +142,7 @@ const ProductManager: React.FC = () => {
         ))}
       </div>
 
-      {/* مودال افزودن یا ویرایش محصول */}
+      {/* ➕ مودال افزودن یا ویرایش محصول */}
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
         <ProductForm
           onSubmit={selectedProduct ? handleUpdateProduct : handleAddProduct}
