@@ -1,5 +1,6 @@
 import "./App.css";
 import { UserList, UserManager } from "./components/lists";
+import ExpenseManager from "./components/managers/ExpenseManager";
 
 function App() {
   return (
@@ -7,6 +8,7 @@ function App() {
       <h1>Happy new year</h1>
       <UserManager />
       <UserList/>
+      <ExpenseManager/>
     </div>
   );
 }
