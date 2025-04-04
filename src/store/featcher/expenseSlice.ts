@@ -15,7 +15,7 @@ interface ExpenseState {
   expenses: Expense[];
   searchQuery: string;
   startDate: string | null; // 💡 فیلتر تاریخ شروع
-  endDate: string | null;   // 💡 فیلتر تاریخ پایان
+  endDate: string | null; // 💡 فیلتر تاریخ پایان
 }
 
 const initialState: ExpenseState = {
@@ -31,23 +31,36 @@ const expenseSlice = createSlice({
   initialState,
   reducers: {
     addExpense: (
-        state,
-        action: PayloadAction<{ title: string; amount: number | string; date: string; description: string }>
-      ) => {
-        const newExpense: Expense = {
-          id: uuidv4(),
-          title: action.payload.title,
-          amount: Number(action.payload.amount),  // تبدیل به عدد
-          date: action.payload.date,
-          description: action.payload.description,
-        };
-        state.expenses.push(newExpense);
-      },
+      state,
+      action: PayloadAction<{
+        title: string;
+        amount: number | string;
+        date: string;
+        description: string;
+      }>,
+    ) => {
+      const newExpense: Expense = {
+        id: uuidv4(),
+        title: action.payload.title,
+        amount: Number(action.payload.amount), // تبدیل به عدد
+        date: action.payload.date,
+        description: action.payload.description,
+      };
+      state.expenses.push(newExpense);
+    },
     updateExpense: (
       state,
-      action: PayloadAction<{ id: string; title: string; amount: number; date: string; description:string }>
+      action: PayloadAction<{
+        id: string;
+        title: string;
+        amount: number;
+        date: string;
+        description: string;
+      }>,
     ) => {
-      const expense = state.expenses.find((exp) => exp.id === action.payload.id);
+      const expense = state.expenses.find(
+        (exp) => exp.id === action.payload.id,
+      );
       if (expense) {
         expense.title = action.payload.title;
         expense.amount = action.payload.amount;
@@ -56,20 +69,29 @@ const expenseSlice = createSlice({
       }
     },
     deleteExpense: (state, action: PayloadAction<string>) => {
-      state.expenses = state.expenses.filter((exp) => exp.id !== action.payload);
+      state.expenses = state.expenses.filter(
+        (exp) => exp.id !== action.payload,
+      );
     },
     setSearchQuery: (state, action: PayloadAction<string>) => {
-        state.searchQuery = action.payload;
-      },
+      state.searchQuery = action.payload;
+    },
     setStartDate: (state, action: PayloadAction<string | null>) => {
-        state.startDate = action.payload;
-      },
+      state.startDate = action.payload;
+    },
     setEndDate: (state, action: PayloadAction<string | null>) => {
-        state.endDate = action.payload;
-      },
+      state.endDate = action.payload;
+    },
   },
 });
 
 // استخراج اکشن‌ها و ریدوسر
-export const { addExpense, updateExpense, deleteExpense, setSearchQuery, setStartDate, setEndDate } = expenseSlice.actions;
+export const {
+  addExpense,
+  updateExpense,
+  deleteExpense,
+  setSearchQuery,
+  setStartDate,
+  setEndDate,
+} = expenseSlice.actions;
 export default expenseSlice.reducer;

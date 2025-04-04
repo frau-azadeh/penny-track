@@ -14,7 +14,10 @@ interface ExpenseFormProps {
   defaultValues?: ExpenseFormValues;
 }
 
-const ExpenseForm: React.FC<ExpenseFormProps> = ({ onSubmit, defaultValues }) => {
+const ExpenseForm: React.FC<ExpenseFormProps> = ({
+  onSubmit,
+  defaultValues,
+}) => {
   const {
     register,
     handleSubmit,

@@ -1,11 +1,17 @@
 import { InputHTMLAttributes } from "react";
-import { FieldError, FieldValues, UseFormRegister, Path } from "react-hook-form";
+import {
+  FieldError,
+  FieldValues,
+  UseFormRegister,
+  Path,
+} from "react-hook-form";
 
-interface InputProps<T extends FieldValues> extends InputHTMLAttributes<HTMLInputElement> {
+interface InputProps<T extends FieldValues>
+  extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   error?: FieldError;
-  register?: UseFormRegister<T>;  // اصلاح شد
-  name: Path<T> | string;          // اصلاح شد
+  register?: UseFormRegister<T>; // اصلاح شد
+  name: Path<T> | string; // اصلاح شد
 }
 
 const Input = <T extends FieldValues>({
@@ -24,7 +30,9 @@ const Input = <T extends FieldValues>({
         {...(register ? register(name as Path<T>) : {})} // تغییر در استفاده از register
         {...rest}
         className={`px-4 py-2 rounded-lg focus:outline-none focus:ring-2 ${
-          error ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-blue-500"
+          error
+            ? "border-red-500 focus:ring-red-500"
+            : "border-gray-300 focus:ring-blue-500"
         } ${className || ""}`}
       />
       {error && <p className="text-red-500 text-sm">{error.message}</p>}

@@ -1,7 +1,11 @@
 import React, { useState, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store/store";
-import { Expense, deleteExpense, updateExpense } from "../../store/featcher/expenseSlice";
+import {
+  Expense,
+  deleteExpense,
+  updateExpense,
+} from "../../store/featcher/expenseSlice";
 import { Button, Modal } from "../ui";
 import ExpenseForm, { ExpenseFormValues } from "../forms/ExpenseForm";
 import ExpenseSearch from "../filters/ExpenseSearch";
@@ -11,8 +15,12 @@ const ExpenseList: React.FC = () => {
   const dispatch = useDispatch();
 
   // گرفتن داده‌ها از استیت
-  const expenses: Expense[] = useSelector((state: RootState) => state.expenses.expenses);
-  const searchQuery = useSelector((state: RootState) => state.expenses.searchQuery);
+  const expenses: Expense[] = useSelector(
+    (state: RootState) => state.expenses.expenses,
+  );
+  const searchQuery = useSelector(
+    (state: RootState) => state.expenses.searchQuery,
+  );
   const startDate = useSelector((state: RootState) => state.expenses.startDate);
   const endDate = useSelector((state: RootState) => state.expenses.endDate);
 
@@ -23,17 +31,22 @@ const ExpenseList: React.FC = () => {
   const filteredExpenses = useMemo(() => {
     return expenses.filter((expense) => {
       const title = expense.title ? expense.title.toLowerCase() : "";
-      const description = expense.description ? expense.description.toLowerCase() : "";
+      const description = expense.description
+        ? expense.description.toLowerCase()
+        : "";
       const search = searchQuery ? searchQuery.toLowerCase() : "";
 
-      const matchesSearch = title.includes(search) || description.includes(search);
+      const matchesSearch =
+        title.includes(search) || description.includes(search);
 
       // 🗓️ مقایسه تاریخ با استفاده از Date
       const expenseDate = new Date(expense.date);
       const startDateValue = startDate ? new Date(startDate) : null;
       const endDateValue = endDate ? new Date(endDate) : null;
 
-      const matchesStartDate = startDateValue ? expenseDate >= startDateValue : true;
+      const matchesStartDate = startDateValue
+        ? expenseDate >= startDateValue
+        : true;
       const matchesEndDate = endDateValue ? expenseDate <= endDateValue : true;
 
       return matchesSearch && matchesStartDate && matchesEndDate;
@@ -80,7 +93,9 @@ const ExpenseList: React.FC = () => {
                 Amount: ${Number(expense.amount).toFixed(2)}
               </p>
               <p className="text-sm text-gray-600">Date: {expense.date}</p>
-              <p className="text-sm text-gray-600">Description: {expense.description}</p>
+              <p className="text-sm text-gray-600">
+                Description: {expense.description}
+              </p>
             </div>
             <div className="space-x-2">
               <Button variant="secondary" onClick={() => handleEdit(expense)}>

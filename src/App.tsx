@@ -7,8 +7,8 @@ function App() {
     <div className="flex flex-col items-center m-2">
       <h1>Happy new year</h1>
       <UserManager />
-      <UserList/>
-      <ExpenseManager/>
+      <UserList />
+      <ExpenseManager />
     </div>
   );
 }

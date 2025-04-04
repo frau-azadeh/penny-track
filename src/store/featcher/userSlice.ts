@@ -31,9 +31,11 @@ export const userSlice = createSlice({
     },
     updateUser: (
       state,
-      action: PayloadAction<{ id: string; name: string; email: string }>
+      action: PayloadAction<{ id: string; name: string; email: string }>,
     ) => {
-      const userIndex = state.users.findIndex((user) => user.id === action.payload.id);
+      const userIndex = state.users.findIndex(
+        (user) => user.id === action.payload.id,
+      );
       if (userIndex !== -1) {
         state.users[userIndex] = {
           ...state.users[userIndex],

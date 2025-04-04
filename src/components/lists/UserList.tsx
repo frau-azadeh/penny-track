@@ -19,17 +19,16 @@ const UserList: React.FC = () => {
   };
 
   const handleEdit = (user: User) => {
-    setSelectedUser({ ...user }); 
+    setSelectedUser({ ...user });
     setIsEditOpen(true);
   };
-  
+
   const handleUpdate = (data: UserFormValues) => {
     if (selectedUser) {
       dispatch(updateUser({ id: selectedUser.id, ...data }));
       setIsEditOpen(false);
     }
   };
-  
 
   return (
     <div className="space-y-2">
@@ -46,16 +45,10 @@ const UserList: React.FC = () => {
               <p className="text-sm text-gray-600">{user.email}</p>
             </div>
             <div className="space-x-2">
-              <Button
-                variant="secondary"
-                onClick={() => handleEdit(user)}
-              >
+              <Button variant="secondary" onClick={() => handleEdit(user)}>
                 Edit
               </Button>
-              <Button
-                variant="danger"
-                onClick={() => handleDelete(user.id)}
-              >
+              <Button variant="danger" onClick={() => handleDelete(user.id)}>
                 Delete
               </Button>
             </div>
@@ -64,17 +57,16 @@ const UserList: React.FC = () => {
       )}
       {/* Modal for Edit */}
       <Modal isOpen={isEditOpen} onClose={() => setIsEditOpen(false)}>
-  {selectedUser && (
-    <UserForm
-      defaultValues={{
-        name: selectedUser.name,  // ✅ به صورت دقیق مقدار name
-        email: selectedUser.email // ✅ به صورت دقیق مقدار email
-      }}
-      onSubmit={handleUpdate}
-    />
-  )}
-</Modal>
-
+        {selectedUser && (
+          <UserForm
+            defaultValues={{
+              name: selectedUser.name, // ✅ به صورت دقیق مقدار name
+              email: selectedUser.email, // ✅ به صورت دقیق مقدار email
+            }}
+            onSubmit={handleUpdate}
+          />
+        )}
+      </Modal>
     </div>
   );
 };

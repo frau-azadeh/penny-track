@@ -8,7 +8,9 @@ const DateFilter: React.FC = () => {
   const [isPending, startTransition] = useTransition();
   const dispatch = useDispatch();
 
-  const handleStartDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleStartDateChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const value = event.target.value;
     setStartDateValue(value);
     startTransition(() => {
