@@ -5,10 +5,16 @@ import { selectCategory } from "../../store/featcher/categorySlice";
 
 const CategoryFilter: React.FC = () => {
   const dispatch = useDispatch();
-  const categories = useSelector((state: RootState) => state.category.categories);
-  const selectedCategory = useSelector((state: RootState) => state.category.selectedCategory);
+  const categories = useSelector(
+    (state: RootState) => state.category.categories,
+  );
+  const selectedCategory = useSelector(
+    (state: RootState) => state.category.selectedCategory,
+  );
 
-  const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleCategoryChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
     dispatch(selectCategory(event.target.value));
   };
 

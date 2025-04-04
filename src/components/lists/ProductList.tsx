@@ -8,7 +8,11 @@ interface ProductListProps {
   onDelete: (id: string) => void;
 }
 
-const ProductList: React.FC<ProductListProps> = ({ products, onEdit, onDelete }) => {
+const ProductList: React.FC<ProductListProps> = ({
+  products,
+  onEdit,
+  onDelete,
+}) => {
   return (
     <div className="space-y-2">
       {products.length === 0 ? (
@@ -22,8 +26,12 @@ const ProductList: React.FC<ProductListProps> = ({ products, onEdit, onDelete })
             <div>
               <h3 className="font-semibold">{product.name}</h3>
               <p className="text-sm text-gray-600">Price: ${product.price}</p>
-              <p className="text-sm text-gray-600">Quantity: {product.quantity}</p>
-              <p className="text-sm text-gray-600">Category: {product.category}</p>
+              <p className="text-sm text-gray-600">
+                Quantity: {product.quantity}
+              </p>
+              <p className="text-sm text-gray-600">
+                Category: {product.category}
+              </p>
             </div>
             <div className="space-x-2">
               <Button variant="secondary" onClick={() => onEdit(product)}>

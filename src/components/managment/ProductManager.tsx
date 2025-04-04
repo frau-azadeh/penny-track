@@ -22,7 +22,9 @@ const ProductManager: React.FC = () => {
   const products: Product[] = useSelector(
     (state: RootState) => state.products.products,
   );
-  const selectedCategory = useSelector((state: RootState) => state.category.selectedCategory);
+  const selectedCategory = useSelector(
+    (state: RootState) => state.category.selectedCategory,
+  );
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -36,7 +38,7 @@ const ProductManager: React.FC = () => {
       (product) =>
         (product.name.toLowerCase().includes(search) ||
           product.description.toLowerCase().includes(search)) &&
-        (selectedCategory === "All" || product.category === selectedCategory)
+        (selectedCategory === "All" || product.category === selectedCategory),
     );
   }, [products, searchQuery, selectedCategory]);
 

@@ -32,12 +32,16 @@ const ProductForm: React.FC<ProductFormProps> = ({
   });
 
   // 🔥 گرفتن دسته‌بندی‌ها از استور
-  const categories = useSelector((state: RootState) => state.category.categories);
+  const categories = useSelector(
+    (state: RootState) => state.category.categories,
+  );
 
   const submitHandler: SubmitHandler<ProductFormValues> = (data) => {
     onSubmit(data);
     toast.success(
-      defaultValues ? "محصول با موفقیت ویرایش شد!" : "محصول با موفقیت اضافه شد!",
+      defaultValues
+        ? "محصول با موفقیت ویرایش شد!"
+        : "محصول با موفقیت اضافه شد!",
     );
   };
 

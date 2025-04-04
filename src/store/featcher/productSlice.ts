@@ -33,7 +33,7 @@ export const productSlice = createSlice({
         quantity: number;
         date: string;
         description: string;
-        category: string;  
+        category: string;
       }>,
     ) => {
       const newProduct: Product = {
