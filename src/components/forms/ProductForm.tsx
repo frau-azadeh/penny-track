@@ -1,5 +1,8 @@
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+import { toast } from "react-toastify";
 import { Input, Button } from "../ui";
 
 export interface ProductFormValues {
@@ -8,6 +11,7 @@ export interface ProductFormValues {
   quantity: number;
   description: string;
   date: string;
+  category: string;
 }
 
 interface ProductFormProps {
@@ -27,8 +31,14 @@ const ProductForm: React.FC<ProductFormProps> = ({
     defaultValues,
   });
 
+  // 🔥 گرفتن دسته‌بندی‌ها از استور
+  const categories = useSelector((state: RootState) => state.category.categories);
+
   const submitHandler: SubmitHandler<ProductFormValues> = (data) => {
     onSubmit(data);
+    toast.success(
+      defaultValues ? "محصول با موفقیت ویرایش شد!" : "محصول با موفقیت اضافه شد!",
+    );
   };
 
   return (
@@ -46,7 +56,6 @@ const ProductForm: React.FC<ProductFormProps> = ({
         placeholder="Enter product name"
         className="w-full"
       />
-
       <Input
         label="Price"
         name="price"
@@ -56,7 +65,6 @@ const ProductForm: React.FC<ProductFormProps> = ({
         placeholder="Enter product price"
         className="w-full"
       />
-
       <Input
         label="Quantity"
         name="quantity"
@@ -66,7 +74,6 @@ const ProductForm: React.FC<ProductFormProps> = ({
         placeholder="Enter product quantity"
         className="w-full"
       />
-
       <Input
         label="Date"
         name="date"
@@ -75,7 +82,6 @@ const ProductForm: React.FC<ProductFormProps> = ({
         error={errors.date}
         className="w-full"
       />
-
       <Input
         label="Description"
         name="description"
@@ -84,6 +90,24 @@ const ProductForm: React.FC<ProductFormProps> = ({
         placeholder="Enter product description"
         className="w-full"
       />
+
+      {/* 🔥 Select Box برای انتخاب دسته‌بندی */}
+      <div>
+        <label className="block mb-1">Category</label>
+        <select
+          {...register("category")}
+          className="border px-2 py-1 rounded-md w-full"
+        >
+          {categories.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
+        {errors.category && (
+          <p className="text-red-500 text-sm">{errors.category.message}</p>
+        )}
+      </div>
 
       <Button type="submit" variant="primary" className="w-full">
         {defaultValues ? "Update Product" : "Add Product"}
