@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { Product, addProduct, updateProduct, deleteProduct } from "../../store/featcher/productSlice";
 import { Button, Modal } from "../ui";
 import ProductForm, { ProductFormValues } from "../forms/ProductForm";
+
+const ITEMS_PER_PAGE = 5;
 
 const ProductManager: React.FC = () => {
   const dispatch = useDispatch();
@@ -11,6 +13,28 @@ const ProductManager: React.FC = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  // 📝 استفاده از useMemo برای فیلتر کردن محصولات
+  const filteredProducts = useMemo(() => {
+    const search = searchQuery.toLowerCase();
+    return products.filter((product) =>
+      product.name.toLowerCase().includes(search) ||
+      product.description.toLowerCase().includes(search)
+    );
+  }, [products, searchQuery]);
+
+  // 📝 محاسبه محصولات صفحه فعلی
+  const paginatedProducts = useMemo(() => {
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    return filteredProducts.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+  }, [filteredProducts, currentPage]);
+
+  // تغییر صفحه
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+  };
 
   // باز کردن مودال برای افزودن یا ویرایش
   const handleOpenModal = (product?: Product) => {
@@ -53,8 +77,17 @@ const ProductManager: React.FC = () => {
         </Button>
       </div>
 
-      {products.length === 0 ? (
-        <p className="text-gray-500">No products available.</p>
+      {/* 📝 جستجو */}
+      <input
+        type="text"
+        placeholder="Search by name or description..."
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        className="border px-2 py-1 rounded-md mb-4 w-full"
+      />
+
+      {paginatedProducts.length === 0 ? (
+        <p className="text-gray-500">No products found.</p>
       ) : (
         <table className="w-full border-collapse">
           <thead>
@@ -68,7 +101,7 @@ const ProductManager: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {products.map((product) => (
+            {paginatedProducts.map((product) => (
               <tr key={product.id} className="border">
                 <td className="border p-2">{product.name}</td>
                 <td className="border p-2">${product.price}</td>
@@ -88,6 +121,19 @@ const ProductManager: React.FC = () => {
           </tbody>
         </table>
       )}
+
+      {/* 📝 صفحه‌بندی */}
+      <div className="flex justify-center space-x-2 mt-4">
+        {Array.from({ length: Math.ceil(filteredProducts.length / ITEMS_PER_PAGE) }).map((_, index) => (
+          <Button
+            key={index}
+            variant={index + 1 === currentPage ? "primary" : "secondary"}
+            onClick={() => handlePageChange(index + 1)}
+          >
+            {index + 1}
+          </Button>
+        ))}
+      </div>
 
       {/* مودال افزودن یا ویرایش محصول */}
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
