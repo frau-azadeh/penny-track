@@ -9,8 +9,11 @@ import {
 } from "../../store/featcher/productSlice";
 import { Button, Modal } from "../ui";
 import ProductForm, { ProductFormValues } from "../forms/ProductForm";
-import ProductTable from "../tables/ProductTable";
 import Pagination from "../ui/Pagination";
+import ProductTable from "../tables/ProductTable";
+import CategoryFilter from "../filters/CategoryFilter"; // 🔥 اضافه شد
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ITEMS_PER_PAGE = 5;
 
@@ -19,6 +22,7 @@ const ProductManager: React.FC = () => {
   const products: Product[] = useSelector(
     (state: RootState) => state.products.products,
   );
+  const selectedCategory = useSelector((state: RootState) => state.category.selectedCategory);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -30,10 +34,11 @@ const ProductManager: React.FC = () => {
     const search = searchQuery.toLowerCase();
     return products.filter(
       (product) =>
-        product.name.toLowerCase().includes(search) ||
-        product.description.toLowerCase().includes(search),
+        (product.name.toLowerCase().includes(search) ||
+          product.description.toLowerCase().includes(search)) &&
+        (selectedCategory === "All" || product.category === selectedCategory)
     );
-  }, [products, searchQuery]);
+  }, [products, searchQuery, selectedCategory]);
 
   const paginatedProducts = useMemo(() => {
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -60,6 +65,10 @@ const ProductManager: React.FC = () => {
     (data: ProductFormValues) => {
       dispatch(addProduct(data));
       handleCloseModal();
+      toast.success("محصول با موفقیت اضافه شد!", {
+        position: "top-right",
+        autoClose: 3000,
+      });
     },
     [dispatch, handleCloseModal],
   );
@@ -69,6 +78,10 @@ const ProductManager: React.FC = () => {
       if (selectedProduct) {
         dispatch(updateProduct({ id: selectedProduct.id, ...data }));
         handleCloseModal();
+        toast.success("محصول با موفقیت به‌روزرسانی شد!", {
+          position: "top-right",
+          autoClose: 3000,
+        });
       }
     },
     [dispatch, selectedProduct, handleCloseModal],
@@ -76,19 +89,50 @@ const ProductManager: React.FC = () => {
 
   const handleDeleteProduct = useCallback(
     (id: string) => {
-      dispatch(deleteProduct(id));
+      toast.warn(
+        <div>
+          <p>آیا از حذف محصول مطمئن هستید؟</p>
+          <div className="flex space-x-2 mt-2">
+            <Button
+              variant="danger"
+              onClick={() => {
+                dispatch(deleteProduct(id));
+                toast.success("محصول با موفقیت حذف شد!", {
+                  position: "top-right",
+                  autoClose: 3000,
+                });
+              }}
+            >
+              بله
+            </Button>
+            <Button variant="secondary" onClick={() => toast.dismiss()}>
+              خیر
+            </Button>
+          </div>
+        </div>,
+        {
+          position: "top-center",
+          autoClose: false,
+          closeOnClick: false,
+          draggable: false,
+        },
+      );
     },
     [dispatch],
   );
 
   return (
     <div className="p-4 space-y-4">
+      <ToastContainer />
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-bold">Product Manager</h2>
         <Button variant="primary" onClick={() => handleOpenModal()}>
           Add Product
         </Button>
       </div>
+
+      {/* 🔥 اضافه کردن فیلتر دسته‌بندی */}
+      <CategoryFilter />
 
       <input
         type="text"
@@ -100,11 +144,14 @@ const ProductManager: React.FC = () => {
 
       {isPending && <p className="text-gray-500">Loading...</p>}
 
-      <ProductTable
-        products={paginatedProducts}
-        onEdit={handleOpenModal}
-        onDelete={handleDeleteProduct}
-      />
+      <div className="flex flex-col space-y-4">
+        <h3>Table View</h3>
+        <ProductTable
+          products={paginatedProducts}
+          onEdit={handleOpenModal}
+          onDelete={handleDeleteProduct}
+        />
+      </div>
 
       <Pagination
         currentPage={currentPage}
