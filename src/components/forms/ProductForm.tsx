@@ -15,7 +15,10 @@ interface ProductFormProps {
   defaultValues?: ProductFormValues;
 }
 
-const ProductForm: React.FC<ProductFormProps> = ({ onSubmit, defaultValues }) => {
+const ProductForm: React.FC<ProductFormProps> = ({
+  onSubmit,
+  defaultValues,
+}) => {
   const {
     register,
     handleSubmit,
@@ -29,7 +32,10 @@ const ProductForm: React.FC<ProductFormProps> = ({ onSubmit, defaultValues }) =>
   };
 
   return (
-    <form onSubmit={handleSubmit(submitHandler)} className="space-y-4 bg-white p-6 rounded-lg shadow-md">
+    <form
+      onSubmit={handleSubmit(submitHandler)}
+      className="space-y-4 bg-white p-6 rounded-lg shadow-md"
+    >
       <h2 className="text-lg font-bold text-gray-700">Product Form</h2>
 
       <Input

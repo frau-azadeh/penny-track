@@ -26,7 +26,13 @@ export const productSlice = createSlice({
   reducers: {
     addProduct: (
       state,
-      action: PayloadAction<{ name: string; price: number; quantity: number; date: string; description: string }>
+      action: PayloadAction<{
+        name: string;
+        price: number;
+        quantity: number;
+        date: string;
+        description: string;
+      }>,
     ) => {
       const newProduct: Product = {
         id: uuidv4(),
@@ -40,7 +46,14 @@ export const productSlice = createSlice({
     },
     updateProduct: (
       state,
-      action: PayloadAction<{ id: string; name: string; price: number; quantity: number; date: string; description: string }>
+      action: PayloadAction<{
+        id: string;
+        name: string;
+        price: number;
+        quantity: number;
+        date: string;
+        description: string;
+      }>,
     ) => {
       const product = state.products.find((p) => p.id === action.payload.id);
       if (product) {
@@ -60,5 +73,6 @@ export const productSlice = createSlice({
   },
 });
 
-export const { addProduct, updateProduct, deleteProduct, setSearchQuery } = productSlice.actions;
+export const { addProduct, updateProduct, deleteProduct, setSearchQuery } =
+  productSlice.actions;
 export default productSlice.reducer;

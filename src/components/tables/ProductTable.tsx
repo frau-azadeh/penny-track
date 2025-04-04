@@ -8,7 +8,11 @@ interface ProductTableProps {
   onDelete: (id: string) => void;
 }
 
-const ProductTable: React.FC<ProductTableProps> = ({ products, onEdit, onDelete }) => {
+const ProductTable: React.FC<ProductTableProps> = ({
+  products,
+  onEdit,
+  onDelete,
+}) => {
   return (
     <table className="w-full border-collapse">
       <thead>

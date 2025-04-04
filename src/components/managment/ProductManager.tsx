@@ -1,7 +1,12 @@
 import React, { useState, useMemo, useTransition, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import { Product, addProduct, updateProduct, deleteProduct } from "../../store/featcher/productSlice";
+import {
+  Product,
+  addProduct,
+  updateProduct,
+  deleteProduct,
+} from "../../store/featcher/productSlice";
 import { Button, Modal } from "../ui";
 import ProductForm, { ProductFormValues } from "../forms/ProductForm";
 import ProductTable from "../tables/ProductTable";
@@ -11,7 +16,9 @@ const ITEMS_PER_PAGE = 5;
 
 const ProductManager: React.FC = () => {
   const dispatch = useDispatch();
-  const products: Product[] = useSelector((state: RootState) => state.products.products);
+  const products: Product[] = useSelector(
+    (state: RootState) => state.products.products,
+  );
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -21,9 +28,10 @@ const ProductManager: React.FC = () => {
 
   const filteredProducts = useMemo(() => {
     const search = searchQuery.toLowerCase();
-    return products.filter((product) =>
-      product.name.toLowerCase().includes(search) ||
-      product.description.toLowerCase().includes(search)
+    return products.filter(
+      (product) =>
+        product.name.toLowerCase().includes(search) ||
+        product.description.toLowerCase().includes(search),
     );
   }, [products, searchQuery]);
 
@@ -48,21 +56,30 @@ const ProductManager: React.FC = () => {
     setIsModalOpen(false);
   }, []);
 
-  const handleAddProduct = useCallback((data: ProductFormValues) => {
-    dispatch(addProduct(data));
-    handleCloseModal();
-  }, [dispatch, handleCloseModal]);
-
-  const handleUpdateProduct = useCallback((data: ProductFormValues) => {
-    if (selectedProduct) {
-      dispatch(updateProduct({ id: selectedProduct.id, ...data }));
+  const handleAddProduct = useCallback(
+    (data: ProductFormValues) => {
+      dispatch(addProduct(data));
       handleCloseModal();
-    }
-  }, [dispatch, selectedProduct, handleCloseModal]);
+    },
+    [dispatch, handleCloseModal],
+  );
 
-  const handleDeleteProduct = useCallback((id: string) => {
-    dispatch(deleteProduct(id));
-  }, [dispatch]);
+  const handleUpdateProduct = useCallback(
+    (data: ProductFormValues) => {
+      if (selectedProduct) {
+        dispatch(updateProduct({ id: selectedProduct.id, ...data }));
+        handleCloseModal();
+      }
+    },
+    [dispatch, selectedProduct, handleCloseModal],
+  );
+
+  const handleDeleteProduct = useCallback(
+    (id: string) => {
+      dispatch(deleteProduct(id));
+    },
+    [dispatch],
+  );
 
   return (
     <div className="p-4 space-y-4">
@@ -83,16 +100,16 @@ const ProductManager: React.FC = () => {
 
       {isPending && <p className="text-gray-500">Loading...</p>}
 
-      <ProductTable 
-        products={paginatedProducts} 
-        onEdit={handleOpenModal} 
-        onDelete={handleDeleteProduct} 
+      <ProductTable
+        products={paginatedProducts}
+        onEdit={handleOpenModal}
+        onDelete={handleDeleteProduct}
       />
 
-      <Pagination 
-        currentPage={currentPage} 
-        totalPages={Math.ceil(filteredProducts.length / ITEMS_PER_PAGE)} 
-        onPageChange={handlePageChange} 
+      <Pagination
+        currentPage={currentPage}
+        totalPages={Math.ceil(filteredProducts.length / ITEMS_PER_PAGE)}
+        onPageChange={handlePageChange}
       />
 
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
