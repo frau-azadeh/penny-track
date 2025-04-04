@@ -4,6 +4,8 @@ import { RootState } from "../../store/store";
 import { Product, addProduct, updateProduct, deleteProduct } from "../../store/featcher/productSlice";
 import { Button, Modal } from "../ui";
 import ProductForm, { ProductFormValues } from "../forms/ProductForm";
+import ProductTable from "../tables/ProductTable";
+import Pagination from "../ui/Pagination";
 
 const ITEMS_PER_PAGE = 5;
 
@@ -17,7 +19,6 @@ const ProductManager: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isPending, startTransition] = useTransition();
 
-  // 📝 استفاده از useMemo برای فیلتر کردن محصولات
   const filteredProducts = useMemo(() => {
     const search = searchQuery.toLowerCase();
     return products.filter((product) =>
@@ -26,38 +27,32 @@ const ProductManager: React.FC = () => {
     );
   }, [products, searchQuery]);
 
-  // 📝 محاسبه محصولات صفحه فعلی
   const paginatedProducts = useMemo(() => {
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
     return filteredProducts.slice(startIndex, startIndex + ITEMS_PER_PAGE);
   }, [filteredProducts, currentPage]);
 
-  // 📄 تغییر صفحه (استفاده از useCallback برای بهینه‌سازی)
   const handlePageChange = useCallback((newPage: number) => {
     startTransition(() => {
       setCurrentPage(newPage);
     });
   }, []);
 
-  // 📂 باز کردن مودال برای افزودن یا ویرایش
   const handleOpenModal = useCallback((product?: Product) => {
     setSelectedProduct(product || null);
     setIsModalOpen(true);
   }, []);
 
-  // ✖️ بستن مودال
   const handleCloseModal = useCallback(() => {
     setSelectedProduct(null);
     setIsModalOpen(false);
   }, []);
 
-  // ➕ مدیریت افزودن محصول
   const handleAddProduct = useCallback((data: ProductFormValues) => {
     dispatch(addProduct(data));
     handleCloseModal();
   }, [dispatch, handleCloseModal]);
 
-  // ✏️ مدیریت ویرایش محصول
   const handleUpdateProduct = useCallback((data: ProductFormValues) => {
     if (selectedProduct) {
       dispatch(updateProduct({ id: selectedProduct.id, ...data }));
@@ -65,7 +60,6 @@ const ProductManager: React.FC = () => {
     }
   }, [dispatch, selectedProduct, handleCloseModal]);
 
-  // 🗑️ مدیریت حذف محصول
   const handleDeleteProduct = useCallback((id: string) => {
     dispatch(deleteProduct(id));
   }, [dispatch]);
@@ -79,70 +73,28 @@ const ProductManager: React.FC = () => {
         </Button>
       </div>
 
-      {/* 🔍 جستجو */}
       <input
         type="text"
-        placeholder="Search by name or description..."
+        placeholder="Search..."
         value={searchQuery}
-        onChange={(e) => {
-          startTransition(() => {
-            setSearchQuery(e.target.value);
-          });
-        }}
-        className="border px-2 py-1 rounded-md mb-4 w-full"
+        onChange={(e) => startTransition(() => setSearchQuery(e.target.value))}
+        className="border px-2 py-1 rounded-md w-full mb-4"
       />
+
       {isPending && <p className="text-gray-500">Loading...</p>}
 
-      {paginatedProducts.length === 0 ? (
-        <p className="text-gray-500">No products found.</p>
-      ) : (
-        <table className="w-full border-collapse">
-          <thead>
-            <tr>
-              <th className="border p-2">Name</th>
-              <th className="border p-2">Price</th>
-              <th className="border p-2">Quantity</th>
-              <th className="border p-2">Date</th>
-              <th className="border p-2">Description</th>
-              <th className="border p-2">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {paginatedProducts.map((product) => (
-              <tr key={product.id} className="border">
-                <td className="border p-2">{product.name}</td>
-                <td className="border p-2">${product.price}</td>
-                <td className="border p-2">{product.quantity}</td>
-                <td className="border p-2">{product.date}</td>
-                <td className="border p-2">{product.description}</td>
-                <td className="border p-2 space-x-2">
-                  <Button variant="secondary" onClick={() => handleOpenModal(product)}>
-                    Edit
-                  </Button>
-                  <Button variant="danger" onClick={() => handleDeleteProduct(product.id)}>
-                    Delete
-                  </Button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+      <ProductTable 
+        products={paginatedProducts} 
+        onEdit={handleOpenModal} 
+        onDelete={handleDeleteProduct} 
+      />
 
-      {/* 📄 صفحه‌بندی */}
-      <div className="flex justify-center space-x-2 mt-4">
-        {Array.from({ length: Math.ceil(filteredProducts.length / ITEMS_PER_PAGE) }).map((_, index) => (
-          <Button
-            key={index}
-            variant={index + 1 === currentPage ? "primary" : "secondary"}
-            onClick={() => handlePageChange(index + 1)}
-          >
-            {index + 1}
-          </Button>
-        ))}
-      </div>
+      <Pagination 
+        currentPage={currentPage} 
+        totalPages={Math.ceil(filteredProducts.length / ITEMS_PER_PAGE)} 
+        onPageChange={handlePageChange} 
+      />
 
-      {/* ➕ مودال افزودن یا ویرایش محصول */}
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
         <ProductForm
           onSubmit={selectedProduct ? handleUpdateProduct : handleAddProduct}
