@@ -29,22 +29,25 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit, defaultValues }) => {
     >
       <h2 className="text-lg font-bold text-gray-700">User Form</h2>
       <Input
-        label="name"
-        name="name"
-        register={register}
-        error={errors.name}
-        placeholder="Enter your name:"
-        className="w-full"
-      />
-      <Input
-        label="email"
-        type="email"
-        error={errors.email}
-        register={register}
-        name="name"
-        placeholder="Enter your email"
-        className="w-full"
-      />
+  label="Name"
+  name="name"
+  register={register}
+  error={errors.name}
+  placeholder="Enter your name"
+  defaultValue={defaultValues?.name}  
+  className="w-full"
+/>
+<Input
+  label="Email"
+  name="email"
+  type="email"
+  register={register}
+  error={errors.email}
+  placeholder="Enter your email"
+  defaultValue={defaultValues?.email}  
+  className="w-full"
+/>
+
       <Button type="submit" variant="primary" className="w-full">
         {defaultValues ? "update user" : "add user"}
       </Button>
