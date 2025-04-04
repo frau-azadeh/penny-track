@@ -11,7 +11,7 @@ function App() {
       <UserManager />
       <UserList />
       <ExpenseManager />
-      <ProductDashboard/>
+      <ProductDashboard />
       <ProductManager />
     </div>
   );
