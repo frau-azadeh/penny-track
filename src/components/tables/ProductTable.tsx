@@ -22,6 +22,7 @@ const ProductTable: React.FC<ProductTableProps> = ({
           <th className="border p-2">Quantity</th>
           <th className="border p-2">Date</th>
           <th className="border p-2">Description</th>
+          <th className="border p-2">Category</th>
           <th className="border p-2">Actions</th>
         </tr>
       </thead>
@@ -33,6 +34,7 @@ const ProductTable: React.FC<ProductTableProps> = ({
             <td className="border p-2">{product.quantity}</td>
             <td className="border p-2">{product.date}</td>
             <td className="border p-2">{product.description}</td>
+            <td className="border p-2">{product.category}</td>
             <td className="border p-2 space-x-2">
               <Button variant="secondary" onClick={() => onEdit(product)}>
                 Edit
