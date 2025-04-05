@@ -9,7 +9,7 @@ import { RootState } from "../store/store";
 
 function Dashboard() {
   const role: "admin" | "user" | null = useSelector(
-    (state: RootState) => state.auth.role,
+    (state: RootState) => state.auth.user?.position || null
   );
 
   return (
