@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
 
-export interface Product {
+export interface Product{
   id: string;
   name: string;
   price: number;
@@ -15,40 +15,38 @@ interface ProductState {
   products: Product[];
   searchQuery: string;
 }
-
-const initialState: ProductState = {
+const initialState: ProductState= {
   products: [],
-  searchQuery: "",
-};
+  searchQuery: ""
+}
 
 export const productSlice = createSlice({
   name: "products",
   initialState,
-  reducers: {
+  reducers:{
     addProduct: (
       state,
-      action: PayloadAction<{
-        name: string;
+       action: PayloadAction<{
+        name:string;
         price: number;
         quantity: number;
         date: string;
         description: string;
         category: string;
-      }>,
-    ) => {
-      const newProduct: Product = {
-        id: uuidv4(),
-        name: action.payload.name,
-        price: action.payload.price,
-        quantity: action.payload.quantity,
-        date: action.payload.date,
-        description: action.payload.description,
-        category: action.payload.category,
-      };
-      state.products.push(newProduct);
+      }>)=>{
+        const newProduct: Product={
+          id: uuidv4(),
+          name: action.payload.name,
+          price: action.payload.price,
+          quantity: action.payload.quantity,
+          date: action.payload.date,
+          description: action.payload.description,
+          category: action.payload.category,
+        };
+        state.products.push(newProduct);
     },
     updateProduct: (
-      state,
+      state, 
       action: PayloadAction<{
         id: string;
         name: string;
@@ -57,10 +55,9 @@ export const productSlice = createSlice({
         date: string;
         description: string;
         category: string;
-      }>,
-    ) => {
-      const product = state.products.find((p) => p.id === action.payload.id);
-      if (product) {
+      }>)=>{
+      const product = state.products.find((p)=> p.id === action.payload.id);
+      if(product){
         product.name = action.payload.name;
         product.price = action.payload.price;
         product.quantity = action.payload.quantity;
@@ -69,15 +66,16 @@ export const productSlice = createSlice({
         product.category = action.payload.category;
       }
     },
-    deleteProduct: (state, action: PayloadAction<string>) => {
-      state.products = state.products.filter((p) => p.id !== action.payload);
+    deleteProduct: (
+      state, 
+      action:PayloadAction<string>)=>{
+        state.products = state.products.filter((p) => p.id !== action.payload)
     },
-    setSearchQuery: (state, action: PayloadAction<string>) => {
+    setSearchQuery: (state, action: PayloadAction<string>)=>{
       state.searchQuery = action.payload;
-    },
-  },
-});
+    }
+  }
+})
 
-export const { addProduct, updateProduct, deleteProduct, setSearchQuery } =
-  productSlice.actions;
+export const {addProduct, deleteProduct, updateProduct, setSearchQuery} = productSlice.actions
 export default productSlice.reducer;
