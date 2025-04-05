@@ -2,7 +2,7 @@ import { persistReducer, persistStore } from "redux-persist";
 import { configureStore } from "@reduxjs/toolkit";
 import storage from "redux-persist/lib/storage";
 import userReducer from "./featcher/userSlice";
-import expenseReduser from "./featcher/expenseSlice";
+import expenseReducer from "./featcher/expenseSlice";
 import productReducer from "./featcher/productSlice";
 import categoryReducer from "./featcher/categorySlice";
 import authReducer from "./featcher/authSlice";
@@ -14,10 +14,11 @@ const persistConfig = {
 };
 
 const persistedUserReducer = persistReducer(persistConfig, userReducer);
-const persistedExpenseReducer = persistReducer(persistConfig, expenseReduser);
+const persistedExpenseReducer = persistReducer(persistConfig, expenseReducer);
 const persistedProductReducer = persistReducer(persistConfig, productReducer);
 const persistedCategoryReducer = persistReducer(persistConfig, categoryReducer);
 const persistedAuthReducer = persistReducer(persistConfig, authReducer);
+
 export const store = configureStore({
   reducer: {
     users: persistedUserReducer,
@@ -34,6 +35,5 @@ export const store = configureStore({
 });
 
 export const persistor = persistStore(store);
-
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
