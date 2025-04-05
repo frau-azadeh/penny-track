@@ -1,13 +1,22 @@
-import React from "react";
-import UserManager from "../components/lists/UserManager";
+import { UserList, UserManager } from "../components/lists";
+import ExpenseManager from "../components/managers/ExpenseManager";
+import ProductDashboard from "../components/managment/ProductDashboard";
+import ProductManager from "../components/managment/ProductManager";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const dashboard: React.FC = () => {
+function Dashboard() {
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-center mb-8">Dashboard</h1>
+    <div className="flex flex-col items-center m-2">
+      <ToastContainer position="top-center" />
+      <h1>my dashboard</h1>
       <UserManager />
+      <UserList />
+      <ExpenseManager />
+      <ProductDashboard />
+      <ProductManager />
     </div>
   );
-};
+}
 
-export default dashboard;
+export default Dashboard;
