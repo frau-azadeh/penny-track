@@ -16,7 +16,7 @@ const authMiddleware: Middleware = (store) => (next) => (action) => {
     } catch (error) {
       console.error("Authentication failed:", error);
       toast.error("Invalid user data, logging out.");
-      
+
       // اصلاح‌شده: استفاده از AppDispatch برای dispatch کردن اکشن AsyncThunk
       (store.dispatch as AppDispatch)(logout());
       return;

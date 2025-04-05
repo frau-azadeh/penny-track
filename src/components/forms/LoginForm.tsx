@@ -38,7 +38,9 @@ const LoginForm: React.FC = () => {
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-semibold text-center mb-6">ورود به سیستم</h2>
+        <h2 className="text-2xl font-semibold text-center mb-6">
+          ورود به سیستم
+        </h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
             <Input

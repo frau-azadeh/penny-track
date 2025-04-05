@@ -21,15 +21,18 @@ const initialState: AuthState = {
 
 export const login = createAsyncThunk(
   "auth/login",
-  async ({ email, password }: { email: string; password: string }, { rejectWithValue }) => {
+  async (
+    { email, password }: { email: string; password: string },
+    { rejectWithValue },
+  ) => {
     try {
       const queryUrl = `https://qjeekbsdjaphrkrveckf.supabase.co/rest/v1/login?email=eq.${encodeURIComponent(email)}&password_hash=eq.${encodeURIComponent(password)}&apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFqZWVrYnNkamFwaHJrcnZlY2tmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDEyNDkwNzAsImV4cCI6MjA1NjgyNTA3MH0.5Arx3Cjy3yNfNmO_K1BPFusgRdojO5rhHRW-Tr99M7k`;
 
       const response = await fetch(queryUrl, {
-        method: 'GET',
+        method: "GET",
         headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
+          "Content-Type": "application/json",
+          Accept: "application/json",
         },
       });
 
@@ -58,9 +61,8 @@ export const login = createAsyncThunk(
       console.error("خطای ورود به سیستم:", error);
       return rejectWithValue("خطای غیرمنتظره در ورود");
     }
-  }
+  },
 );
-
 
 // اضافه کردن logout برای اکسپورت
 export const logout = createAsyncThunk("auth/logout", async () => {

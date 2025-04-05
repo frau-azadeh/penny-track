@@ -16,7 +16,10 @@ interface ProductFormProps {
   onSubmit: (data: ProductFormValues) => void;
 }
 
-const ProductForm: React.FC<ProductFormProps> = ({ defaultValues, onSubmit }) => {
+const ProductForm: React.FC<ProductFormProps> = ({
+  defaultValues,
+  onSubmit,
+}) => {
   const { register, handleSubmit, reset } = useForm<ProductFormValues>({
     defaultValues,
   });
