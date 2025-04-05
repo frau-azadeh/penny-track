@@ -28,6 +28,8 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({
   });
 
   const submitHandler: SubmitHandler<ExpenseFormValues> = (data) => {
+    // تبدیل مقدار amount به عدد
+    data.amount = Number(data.amount);
     onSubmit(data);
     reset(); // پاک کردن فرم بعد از ارسال
   };
@@ -37,42 +39,59 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({
       onSubmit={handleSubmit(submitHandler)}
       className="space-y-4 bg-white p-6 rounded-lg shadow-md"
     >
-      <h2 className="text-lg font-bold text-gray-700">Expense Form</h2>
-      <Input
-        label="Title"
-        name="title"
-        register={register}
-        error={errors.title}
-        placeholder="Enter expense title"
-        className="w-full"
-      />
-      <Input
-        label="Amount"
-        name="amount"
-        type="number"
-        register={register}
-        error={errors.amount}
-        placeholder="Enter amount"
-        className="w-full"
-      />
-      <Input
-        label="Date"
-        name="date"
-        type="date"
-        register={register}
-        error={errors.date}
-        className="w-full"
-      />
-      <Input
-        label="Description"
-        name="description"
-        type="description"
-        register={register}
-        error={errors.description}
-        className="w-full"
-      />
-      <Button type="submit" variant="primary" className="w-full">
+      <h2 className="text-lg font-bold text-gray-700">
         {defaultValues ? "Update Expense" : "Add Expense"}
+      </h2>
+
+      {/* فیلد عنوان */}
+      {/* فیلد عنوان */}
+<Input
+  label="عنوان"
+  {...register("title", { required: "عنوان الزامی است" })}
+  error={errors.title}
+  placeholder="عنوان هزینه را وارد کنید"
+  className="w-full"
+/>
+
+
+      {/* فیلد مبلغ */}
+      {/* فیلد مبلغ */}
+<Input
+  label="مبلغ"
+  {...register("amount", {
+    required: "مبلغ الزامی است",
+    valueAsNumber: true,
+    min: { value: 1, message: "مبلغ باید بزرگتر از 0 باشد" },
+  })}
+  type="number"
+  error={errors.amount}
+  placeholder="مبلغ را وارد کنید"
+  className="w-full"
+/>
+
+{/* فیلد تاریخ */}
+<Input
+  label="تاریخ"
+  {...register("date", { required: "تاریخ الزامی است" })}
+  type="date"
+  error={errors.date}
+  className="w-full"
+/>
+
+{/* فیلد توضیحات */}
+<Input
+  label="توضیحات"
+  {...register("description", { required: "توضیحات الزامی است" })}
+  type="text"
+  error={errors.description}
+  placeholder="توضیحات را وارد کنید"
+  className="w-full"
+/>
+
+
+      {/* دکمه ثبت */}
+      <Button type="submit" variant="primary" className="w-full">
+        {defaultValues ? "ویرایش هزینه" : "افزودن هزینه"}
       </Button>
     </form>
   );
