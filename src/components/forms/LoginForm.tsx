@@ -18,11 +18,23 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 bg-white p-6 rounded-lg shadow-md">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-4 bg-white p-6 rounded-lg shadow-md"
+    >
       <h2 className="text-lg font-bold text-gray-700">Login</h2>
 
-      <Input label="Username" {...register("username")} placeholder="Enter your username" />
-      <Input label="Password" {...register("password")} type="password" placeholder="Enter your password" />
+      <Input
+        label="Username"
+        {...register("username")}
+        placeholder="Enter your username"
+      />
+      <Input
+        label="Password"
+        {...register("password")}
+        type="password"
+        placeholder="Enter your password"
+      />
 
       <Button type="submit" variant="primary" className="w-full">
         Login

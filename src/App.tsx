@@ -16,7 +16,14 @@ function App() {
           <ToastContainer position="top-center" />
           <Routes>
             <Route path="/" element={<Login />} />
-            <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
           </Routes>
         </Router>
       </PersistGate>
