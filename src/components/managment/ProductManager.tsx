@@ -11,7 +11,7 @@ import { Button, Modal } from "../ui";
 import ProductForm, { ProductFormValues } from "../forms/ProductForm";
 import Pagination from "../ui/Pagination";
 import ProductTable from "../tables/ProductTable";
-import CategoryFilter from "../filters/CategoryFilter"; // 🔥 اضافه شد
+import CategoryFilter from "../filters/CategoryFilter";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -34,12 +34,14 @@ const ProductManager: React.FC = () => {
 
   const filteredProducts = useMemo(() => {
     const search = searchQuery.toLowerCase();
-    return products.filter(
-      (product) =>
-        (product.name.toLowerCase().includes(search) ||
-          product.description.toLowerCase().includes(search)) &&
-        (selectedCategory === "All" || product.category === selectedCategory),
-    );
+    return products.filter((product) => {
+      const productName = product.name?.toLowerCase() || "";
+      const productDescription = product.description?.toLowerCase() || "";
+      return (
+        (productName.includes(search) || productDescription.includes(search)) &&
+        (selectedCategory === "All" || product.category === selectedCategory)
+      );
+    });
   }, [products, searchQuery, selectedCategory]);
 
   const paginatedProducts = useMemo(() => {
@@ -99,6 +101,7 @@ const ProductManager: React.FC = () => {
               variant="danger"
               onClick={() => {
                 dispatch(deleteProduct(id));
+                toast.dismiss();
                 toast.success("محصول با موفقیت حذف شد!", {
                   position: "top-right",
                   autoClose: 3000,
@@ -133,7 +136,6 @@ const ProductManager: React.FC = () => {
         </Button>
       </div>
 
-      {/* 🔥 اضافه کردن فیلتر دسته‌بندی */}
       <CategoryFilter />
 
       <input
