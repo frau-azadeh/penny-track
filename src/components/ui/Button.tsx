@@ -8,7 +8,7 @@ const Button: React.FC<ButtonProps> = ({
   children,
   className,
   variant = "primary",
-  type = "button",
+  type = "submit",
   ...rest
 }) => {
   const baseStyle = "px-4 py-2 rounded-lg transition duration-300";
