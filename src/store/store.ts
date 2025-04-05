@@ -6,6 +6,7 @@ import expenseReduser from "./featcher/expenseSlice";
 import productReducer from "./featcher/productSlice";
 import categoryReducer from "./featcher/categorySlice";
 import authReducer from "./featcher/authSlice";
+import authMiddleware from "./middleware/authMiddleware";
 
 const persistConfig = {
   key: "users",
@@ -28,7 +29,7 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }),
+    }).concat(authMiddleware), 
   devTools: process.env.NODE_ENV !== "production",
 });
 
