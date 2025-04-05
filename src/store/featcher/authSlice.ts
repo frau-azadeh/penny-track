@@ -1,108 +1,98 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { jwtDecode } from "jwt-decode";
-
-// تعریف نوع دقیق برای اطلاعات موجود در JWT
-interface JwtPayload {
-  id: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  role: "admin" | "user";
-}
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
 interface User {
-  id: string;
+  id: number | string;
   email: string;
-  firstName: string;
-  lastName: string;
-  role: "admin" | "user";
+  full_name: string;
+  position: "admin" | "user";
 }
 
 interface AuthState {
   isAuthenticated: boolean;
-  token: string | null;
-  role: "admin" | "user" | null;
-  currentUser: User | null;
+  user: User | null;
+  error: string | null;
 }
 
 const initialState: AuthState = {
   isAuthenticated: false,
-  token: null,
-  role: null,
-  currentUser: null,
+  user: null,
+  error: null,
 };
+
+export const login = createAsyncThunk(
+  "auth/login",
+  async ({ email, password }: { email: string; password: string }, { rejectWithValue }) => {
+    try {
+      const queryUrl = `https://qjeekbsdjaphrkrveckf.supabase.co/rest/v1/login?email=eq.${encodeURIComponent(email)}&password_hash=eq.${encodeURIComponent(password)}&apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFqZWVrYnNkamFwaHJrcnZlY2tmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDEyNDkwNzAsImV4cCI6MjA1NjgyNTA3MH0.5Arx3Cjy3yNfNmO_K1BPFusgRdojO5rhHRW-Tr99M7k`;
+
+      const response = await fetch(queryUrl, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        const errorData = await response.text();
+        console.error("خطای سرور:", errorData);
+        return rejectWithValue("خطا در درخواست: " + errorData);
+      }
+
+      const data = await response.json();
+
+      if (!data || data.length === 0) {
+        console.warn("کاربری با ایمیل و پسورد واردشده یافت نشد");
+        return rejectWithValue("ایمیل یا رمز عبور اشتباه است");
+      }
+
+      const user: User = {
+        id: data[0].id,
+        email: data[0].email,
+        full_name: data[0].full_name,
+        position: data[0].position,
+      };
+
+      return user;
+    } catch (error) {
+      console.error("خطای ورود به سیستم:", error);
+      return rejectWithValue("خطای غیرمنتظره در ورود");
+    }
+  }
+);
+
+
+// اضافه کردن logout برای اکسپورت
+export const logout = createAsyncThunk("auth/logout", async () => {
+  return null;
+});
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    login: (state, action: PayloadAction<string>) => {
-      state.isAuthenticated = true;
-      state.token = action.payload;
-
-      try {
-        const decoded = jwtDecode<JwtPayload>(action.payload);
-        state.role = decoded.role;
-        state.currentUser = {
-          id: decoded.id,
-          email: decoded.email,
-          firstName: decoded.firstName,
-          lastName: decoded.lastName,
-          role: decoded.role,
-        };
-        console.log("User logged in:", state.currentUser);
-      } catch (error) {
-        console.error("Invalid token format:", error);
-        state.isAuthenticated = false;
-        state.token = null;
-        state.role = null;
-        state.currentUser = null;
-      }
+    clearError: (state) => {
+      state.error = null;
     },
-
-    // ✅ اکشن loginSuccess برای استفاده در middleware
-    loginSuccess: (state, action: PayloadAction<string>) => {
+  },
+  extraReducers: (builder) => {
+    builder.addCase(login.fulfilled, (state, action: PayloadAction<User>) => {
       state.isAuthenticated = true;
-      state.token = action.payload;
-
-      try {
-        const decoded = jwtDecode<JwtPayload>(action.payload);
-        state.role = decoded.role;
-        state.currentUser = {
-          id: decoded.id,
-          email: decoded.email,
-          firstName: decoded.firstName,
-          lastName: decoded.lastName,
-          role: decoded.role,
-        };
-        console.log("User logged in successfully:", state.currentUser);
-      } catch (error) {
-        console.error("Invalid token format:", error);
-        state.isAuthenticated = false;
-        state.token = null;
-        state.role = null;
-        state.currentUser = null;
-      }
-    },
-
-    logout: (state) => {
+      state.user = action.payload;
+      state.error = null;
+    });
+    builder.addCase(login.rejected, (state, action) => {
       state.isAuthenticated = false;
-      state.token = null;
-      state.role = null;
-      state.currentUser = null;
-      console.log("User logged out");
-    },
-
-    setUserRole: (state, action: PayloadAction<"admin" | "user">) => {
-      state.role = action.payload;
-    },
-
-    setCurrentUser: (state, action: PayloadAction<User>) => {
-      state.currentUser = action.payload;
-    },
+      state.user = null;
+      state.error = action.payload as string;
+    });
+    builder.addCase(logout.fulfilled, (state) => {
+      state.isAuthenticated = false;
+      state.user = null;
+      state.error = null;
+    });
   },
 });
 
-export const { login, loginSuccess, logout, setUserRole, setCurrentUser } =
-  authSlice.actions;
+export const { clearError } = authSlice.actions;
 export default authSlice.reducer;
