@@ -1,121 +1,103 @@
 import React from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store/store";
-import { toast } from "react-toastify";
-import { Input, Button } from "../ui";
+import { useForm } from "react-hook-form";
+import { Button } from "../ui";
 
 export interface ProductFormValues {
   name: string;
+  description: string;
+  category: string;
   price: number;
   quantity: number;
-  description: string;
   date: string;
-  category: string;
 }
 
 interface ProductFormProps {
-  onSubmit: (data: ProductFormValues) => void;
   defaultValues?: ProductFormValues;
+  onSubmit: (data: ProductFormValues) => void;
 }
 
-const ProductForm: React.FC<ProductFormProps> = ({
-  onSubmit,
-  defaultValues,
-}) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<ProductFormValues>({
+const ProductForm: React.FC<ProductFormProps> = ({ defaultValues, onSubmit }) => {
+  const { register, handleSubmit, reset } = useForm<ProductFormValues>({
     defaultValues,
   });
 
-  // 🔥 گرفتن دسته‌بندی‌ها از استور
-  const categories = useSelector(
-    (state: RootState) => state.category.categories,
-  );
-
-  const submitHandler: SubmitHandler<ProductFormValues> = (data) => {
+  const handleFormSubmit = (data: ProductFormValues) => {
     onSubmit(data);
-    toast.success(
-      defaultValues
-        ? "محصول با موفقیت ویرایش شد!"
-        : "محصول با موفقیت اضافه شد!",
-    );
+    reset(); // پاک کردن فرم پس از ارسال
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(submitHandler)}
-      className="space-y-4 bg-white p-6 rounded-lg shadow-md"
-    >
-      <h2 className="text-lg font-bold text-gray-700">Product Form</h2>
+    <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4 p-4">
+      <h3 className="text-xl font-semibold mb-4">افزودن/ویرایش محصول</h3>
+      <div className="grid grid-cols-2 gap-4">
+        <div className="flex flex-col">
+          <label className="text-sm font-medium mb-1">نام محصول</label>
+          <input
+            {...register("name")}
+            placeholder="نام محصول"
+            className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
 
-      <Input
-        label="Product Name"
-        name="name"
-        register={register}
-        error={errors.name}
-        placeholder="Enter product name"
-        className="w-full"
-      />
-      <Input
-        label="Price"
-        name="price"
-        type="number"
-        register={register}
-        error={errors.price}
-        placeholder="Enter product price"
-        className="w-full"
-      />
-      <Input
-        label="Quantity"
-        name="quantity"
-        type="number"
-        register={register}
-        error={errors.quantity}
-        placeholder="Enter product quantity"
-        className="w-full"
-      />
-      <Input
-        label="Date"
-        name="date"
-        type="date"
-        register={register}
-        error={errors.date}
-        className="w-full"
-      />
-      <Input
-        label="Description"
-        name="description"
-        register={register}
-        error={errors.description}
-        placeholder="Enter product description"
-        className="w-full"
-      />
+        <div className="flex flex-col">
+          <label className="text-sm font-medium mb-1">دسته‌بندی</label>
+          <input
+            {...register("category")}
+            placeholder="دسته‌بندی"
+            className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
 
-      {/* 🔥 Select Box برای انتخاب دسته‌بندی */}
-      <div>
-        <label className="block mb-1">Category</label>
-        <select
-          {...register("category")}
-          className="border px-2 py-1 rounded-md w-full"
-        >
-          {categories.map((category) => (
-            <option key={category} value={category}>
-              {category}
-            </option>
-          ))}
-        </select>
-        {errors.category && (
-          <p className="text-red-500 text-sm">{errors.category.message}</p>
-        )}
+        <div className="flex flex-col">
+          <label className="text-sm font-medium mb-1">توضیحات</label>
+          <input
+            {...register("description")}
+            placeholder="توضیحات"
+            className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
+
+        <div className="flex flex-col">
+          <label className="text-sm font-medium mb-1">قیمت</label>
+          <input
+            type="number"
+            {...register("price")}
+            placeholder="قیمت"
+            className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
+
+        <div className="flex flex-col">
+          <label className="text-sm font-medium mb-1">تعداد</label>
+          <input
+            type="number"
+            {...register("quantity")}
+            placeholder="تعداد"
+            className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
+
+        <div className="flex flex-col">
+          <label className="text-sm font-medium mb-1">تاریخ</label>
+          <input
+            type="date"
+            {...register("date")}
+            className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
       </div>
 
-      <Button type="submit" variant="primary" className="w-full">
-        {defaultValues ? "Update Product" : "Add Product"}
-      </Button>
+      <div className="flex justify-end mt-4">
+        <Button type="submit" variant="primary" className="px-4 py-2">
+          ذخیره
+        </Button>
+      </div>
     </form>
   );
 };
