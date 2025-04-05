@@ -5,6 +5,7 @@ import userReducer from "./featcher/userSlice";
 import expenseReduser from "./featcher/expenseSlice";
 import productReducer from "./featcher/productSlice";
 import categoryReducer from "./featcher/categorySlice";
+import authReducer from "./featcher/authSlice";
 
 const persistConfig = {
   key: "users",
@@ -15,12 +16,14 @@ const persistedUserReducer = persistReducer(persistConfig, userReducer);
 const persistedExpenseReducer = persistReducer(persistConfig, expenseReduser);
 const persistedProductReducer = persistReducer(persistConfig, productReducer);
 const persistedCategoryReducer = persistReducer(persistConfig, categoryReducer);
+const persistedAuthReducer = persistReducer(persistConfig, authReducer);
 export const store = configureStore({
   reducer: {
     users: persistedUserReducer,
     expenses: persistedExpenseReducer,
     products: persistedProductReducer,
     category: persistedCategoryReducer,
+    auth: persistedAuthReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
