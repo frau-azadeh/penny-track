@@ -1,19 +1,13 @@
-import { Navigate, Outlet } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { RootState } from "../store/store";
+import { Navigate, Outlet } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/store';
 
-const ProtectedRoute = ({
-  requiredRole,
-}: {
-  requiredRole: "admin" | "user";
-}) => {
-  const { isAuthenticated, currentUser } = useSelector(
-    (state: RootState) => state.auth,
-  );
+const ProtectedRoute = () => {
+  const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
 
-  if (!isAuthenticated) return <Navigate to="/" replace />;
-  if (currentUser?.role !== requiredRole)
-    return <Navigate to="/unauthorized" replace />;
+  if (!isAuthenticated) {
+    return <Navigate to="/" replace />;
+  }
 
   return <Outlet />;
 };
