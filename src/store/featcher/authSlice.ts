@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import {jwtDecode} from "jwt-decode"; 
+import { jwtDecode } from "jwt-decode";
 
 // تعریف نوع دقیق برای اطلاعات موجود در JWT
 interface JwtPayload {
@@ -103,5 +103,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { login, loginSuccess, logout, setUserRole, setCurrentUser } = authSlice.actions;
+export const { login, loginSuccess, logout, setUserRole, setCurrentUser } =
+  authSlice.actions;
 export default authSlice.reducer;

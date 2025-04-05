@@ -1,5 +1,5 @@
 import { Middleware, isAnyOf } from "@reduxjs/toolkit";
-import {jwtDecode} from "jwt-decode";  // ✅ استفاده از jwt-decode
+import { jwtDecode } from "jwt-decode"; // ✅ استفاده از jwt-decode
 import { logout, login } from "../featcher/authSlice";
 import { toast } from "react-toastify";
 

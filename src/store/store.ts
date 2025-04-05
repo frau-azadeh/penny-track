@@ -29,7 +29,7 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }).concat(authMiddleware), 
+    }).concat(authMiddleware),
   devTools: process.env.NODE_ENV !== "production",
 });
 
