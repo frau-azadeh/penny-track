@@ -20,7 +20,12 @@ const ProductForm: React.FC<ProductFormProps> = ({
   defaultValues,
   onSubmit,
 }) => {
-  const { register, handleSubmit, reset, formState: { errors } } = useForm<ProductFormValues>({
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<ProductFormValues>({
     defaultValues,
   });
 
