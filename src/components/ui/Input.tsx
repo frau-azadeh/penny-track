@@ -16,7 +16,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           name={name}
           ref={ref}
           className={`px-4 py-2 rounded-lg focus:outline-none focus:ring ${
-            error 
+            error
               ? "border-red-500 focus:ring-red-500"
               : "border-gray-300 focus:ring-blue-500"
           } ${className || ""}`}
@@ -25,7 +25,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         {error && <p className="text-red-500 text-sm">{error.message}</p>}
       </div>
     );
-  }
+  },
 );
 
 Input.displayName = "Input";
