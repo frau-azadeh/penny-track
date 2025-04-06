@@ -7,9 +7,8 @@ import {
   updateProduct,
   deleteProduct,
 } from "../../store/featcher/productSlice";
-import { Button, Modal, Input } from "../ui";
+import { Button, Modal, Input, Pagination } from "../ui";
 import ProductForm, { ProductFormValues } from "../forms/ProductForm";
-import Pagination from "../ui/Pagination";
 import ProductTable from "../tables/ProductTable";
 import CategoryFilter from "../filters/CategoryFilter";
 import { toast, ToastContainer } from "react-toastify";
