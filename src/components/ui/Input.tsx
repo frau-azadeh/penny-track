@@ -3,7 +3,7 @@ import { FieldError } from "react-hook-form";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement>{
   label: string;
-  error: FieldError;
+  error?: FieldError;
 }
 const Input =forwardRef<HTMLInputElement, InputProps> (({
   label,
@@ -20,14 +20,14 @@ const Input =forwardRef<HTMLInputElement, InputProps> (({
         id={name}
         name={name}
         ref={ref}
-        className={`px-4 py-2 rounded-lg focus:outline-none focus:ring${
+        className={`px-4 py-2 rounded-lg focus:outline-none focus:ring ${
           error
-              ? "border-red-600 focus:ring-red-500"
-              : "border-gray-300 focus:ring-blue-500"
+            ? "border border-red-600 focus:ring-red-500"
+            : "border border-gray-300 focus:ring-blue-500"
         }`}
         {...rest}
-      />
-      {error && <p className="text-red-500">{error.message}</p>}
+        />
+        {error && <p className="text-red-500">{error.message}</p>}        
     </div>
   )
 }
