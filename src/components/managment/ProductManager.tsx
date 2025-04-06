@@ -7,7 +7,7 @@ import {
   updateProduct,
   deleteProduct,
 } from "../../store/featcher/productSlice";
-import { Button, Modal } from "../ui";
+import { Button, Modal, Input } from "../ui";
 import ProductForm, { ProductFormValues } from "../forms/ProductForm";
 import Pagination from "../ui/Pagination";
 import ProductTable from "../tables/ProductTable";
@@ -69,10 +69,7 @@ const ProductManager: React.FC = () => {
     (data: ProductFormValues) => {
       dispatch(addProduct(data));
       handleCloseModal();
-      toast.success("محصول با موفقیت اضافه شد!", {
-        position: "top-right",
-        autoClose: 3000,
-      });
+      toast.success("محصول با موفقیت اضافه شد!");
     },
     [dispatch, handleCloseModal],
   );
@@ -82,10 +79,7 @@ const ProductManager: React.FC = () => {
       if (selectedProduct) {
         dispatch(updateProduct({ id: selectedProduct.id, ...data }));
         handleCloseModal();
-        toast.success("محصول با موفقیت به‌روزرسانی شد!", {
-          position: "top-right",
-          autoClose: 3000,
-        });
+        toast.success("محصول با موفقیت به‌روزرسانی شد!");
       }
     },
     [dispatch, selectedProduct, handleCloseModal],
@@ -102,10 +96,7 @@ const ProductManager: React.FC = () => {
               onClick={() => {
                 dispatch(deleteProduct(id));
                 toast.dismiss();
-                toast.success("محصول با موفقیت حذف شد!", {
-                  position: "top-right",
-                  autoClose: 3000,
-                });
+                toast.success("محصول با موفقیت حذف شد!");
               }}
             >
               بله
@@ -115,12 +106,6 @@ const ProductManager: React.FC = () => {
             </Button>
           </div>
         </div>,
-        {
-          position: "top-center",
-          autoClose: false,
-          closeOnClick: false,
-          draggable: false,
-        },
       );
     },
     [dispatch],
@@ -135,19 +120,15 @@ const ProductManager: React.FC = () => {
           Add Product
         </Button>
       </div>
-
       <CategoryFilter />
-
-      <input
-        type="text"
+      <Input
+        label="Search"
         placeholder="Search..."
         value={searchQuery}
         onChange={(e) => startTransition(() => setSearchQuery(e.target.value))}
         className="border px-2 py-1 rounded-md w-full mb-4"
       />
-
       {isPending && <p className="text-gray-500">Loading...</p>}
-
       <div className="flex flex-col space-y-4">
         <h3>Table View</h3>
         <ProductTable
@@ -156,13 +137,11 @@ const ProductManager: React.FC = () => {
           onDelete={handleDeleteProduct}
         />
       </div>
-
       <Pagination
         currentPage={currentPage}
         totalPages={Math.ceil(filteredProducts.length / ITEMS_PER_PAGE)}
         onPageChange={handlePageChange}
       />
-
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
         <ProductForm
           onSubmit={selectedProduct ? handleUpdateProduct : handleAddProduct}
