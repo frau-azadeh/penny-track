@@ -1,12 +1,12 @@
-import React, { ButtonHTMLAttributes } from 'react'
+import React, { ButtonHTMLAttributes } from "react";
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>{
-  variant?: "primary"| "secondary" | "danger"
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: "primary" | "secondary" | "danger";
 }
 
 const Button: React.FC<ButtonProps> = ({
-  variant= "primary",
-  type= "submit",
+  variant = "primary",
+  type = "submit",
   className,
   children,
   ...rest
@@ -15,8 +15,8 @@ const Button: React.FC<ButtonProps> = ({
   const variantStyle = {
     primary: "bg-blue-500 text-white hover:bg-blue-900",
     secondary: "bg-gray-500 text-white hover:bg-gray-900",
-    danger: "bg-red-500 text-white hover:bg-red-900"
-  }
+    danger: "bg-red-500 text-white hover:bg-red-900",
+  };
   return (
     <button
       className={`${baseStyle} ${variantStyle[variant]} ${className || ""}`}
@@ -24,7 +24,7 @@ const Button: React.FC<ButtonProps> = ({
     >
       {children}
     </button>
-  )
-}
+  );
+};
 
-export default Button
+export default Button;
