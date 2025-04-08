@@ -1,41 +1,37 @@
-import React, { useMemo, useCallback } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../store/store";
+import React, { useCallback, useMemo } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '../../store/store';
 import { selectCategory } from "../../store/featcher/categorySlice";
-
-const CategoryFilter: React.FC = () => {
+const CategoryFilter:React.FC = () => {
   const dispatch = useDispatch();
 
-  // استفاده از useMemo برای بهینه کردن دسترسی به دسته‌بندی‌ها
-  const categories = useSelector((state: RootState) => state.category.categories);
-  const selectedCategory = useSelector((state: RootState) => state.category.selectedCategory);
+  const categories = useSelector((state: RootState)=>state.category.categories);
+  const selectedCategory = useSelector((state: RootState)=> state.category.selectedCategory);
 
-  const memoizedCategories = useMemo(() => categories, [categories]);
+  const memorizedCategories = useMemo (()=> categories, [categories]);
 
-  // استفاده از useCallback برای جلوگیری از ساخت مجدد تابع
   const handleCategoryChange = useCallback(
-    (event: React.ChangeEvent<HTMLSelectElement>) => {
-      dispatch(selectCategory(event.target.value));
+    (event: React.ChangeEvent<HTMLSelectElement>)=>{
+      dispatch(selectCategory(event.target.value))
     },
     [dispatch]
-  );
-
+  )
   return (
-    <div className="mb-4">
-      <label className="mr-2">Filter by Category:</label>
+    <div className='mb-4'>
+      <label className='mr-2'>فیلتر بر اساس دسته بندی: </label>
       <select
         value={selectedCategory}
         onChange={handleCategoryChange}
-        className="border px-2 py-1 rounded-md"
+        className='border px-2 py-1 rounded-md'
       >
-        {memoizedCategories.map((category) => (
+        {memorizedCategories.map((category)=>(
           <option key={category} value={category}>
             {category}
           </option>
         ))}
       </select>
     </div>
-  );
-};
+  )
+}
 
-export default CategoryFilter;
+export default CategoryFilter
