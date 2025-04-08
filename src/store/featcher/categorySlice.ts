@@ -6,22 +6,22 @@ export interface CategoryState {
 }
 
 const initialState: CategoryState = {
-  categories: ["همه", "غذا", "میوه", "کتاب", "لباس"],
+  categories: ["همه", "غذا", "میوه", "کتاب", "لباس", "سایر"],
   selectedCategory: "همه",
-};
+}
 
-const categorySlice = createSlice({
+export const categorySlice = createSlice({
   name: "category",
   initialState,
   reducers: {
-    setCategories: (state, action: PayloadAction<string[]>) => {
-      state.categories = action.payload;
+    setCategories: (state, action: PayloadAction<string[]>)=>{
+      state.categories = action.payload
     },
-    selectCategory: (state, action: PayloadAction<string>) => {
-      state.selectedCategory = action.payload;
-    },
-  },
-});
+    selectCategory: (state, action: PayloadAction<string>)=>{
+      state.selectedCategory = action.payload
+    }
+  }
+})
 
-export const { selectCategory, setCategories } = categorySlice.actions;
+export const {setCategories, selectCategory} = categorySlice.actions;
 export default categorySlice.reducer;
