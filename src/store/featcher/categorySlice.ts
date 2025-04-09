@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface CategoryState {
+export interface CategoryState {
   categories: string[];
   selectedCategory: string;
 }
