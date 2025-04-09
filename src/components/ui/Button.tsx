@@ -1,13 +1,11 @@
 import React, { ButtonHTMLAttributes } from "react";
-
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "danger";
+  variant?: "secondary" | "primary" | "danger";
 }
-
 const Button: React.FC<ButtonProps> = ({
-  variant = "primary",
-  type = "submit",
   className,
+  type = "button",
+  variant = "primary",
   children,
   ...rest
 }) => {
@@ -19,7 +17,7 @@ const Button: React.FC<ButtonProps> = ({
   };
   return (
     <button
-      className={`${baseStyle} ${variantStyle[variant]} ${className || ""}`}
+      className={`${className || ""} ${baseStyle} ${variantStyle[variant]}`}
       {...rest}
     >
       {children}
