@@ -33,11 +33,10 @@ const ProductForm: React.FC<ProductFormProps> = ({
     onSubmit(data);
     reset();
   };
-
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4 p-4">
-      <h3 className="text-xl font-semibold mb-4">افزودن/ویرایش محصول</h3>
-      <div className="grid grid-cols-2 gap-4">
+      <h3 className="text-xl font-bold m-4">افزودن / ویرایش محصول</h3>
+      <div className="grid grid-col-1 gap-4">
         <Input
           label="نام محصول"
           {...register("name", { required: "نام محصول الزامی است" })}
@@ -45,9 +44,9 @@ const ProductForm: React.FC<ProductFormProps> = ({
           error={errors.name}
         />
         <Input
-          label="دسته‌بندی"
-          {...register("category", { required: "دسته‌بندی الزامی است" })}
-          placeholder="دسته‌بندی"
+          label="دسته بندی"
+          {...register("category", { required: "دسته بندی الزامی میباشد" })}
+          placeholder="دسته بندی"
           error={errors.category}
         />
         <Input
@@ -73,11 +72,11 @@ const ProductForm: React.FC<ProductFormProps> = ({
         <Input
           label="تاریخ"
           type="date"
-          {...register("date", { required: "تاریخ الزامی است" })}
+          {...register("date", { required: "تاریح الزامی است" })}
           error={errors.date}
         />
       </div>
-      <div className="flex justify-end mt-4">
+      <div className="flex justify-end w-full ">
         <Button type="submit" variant="primary" className="px-4 py-2">
           ذخیره
         </Button>
