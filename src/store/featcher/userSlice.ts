@@ -1,13 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
-
-interface User {
+export interface User {
   id: string;
   name: string;
   email: string;
 }
 
-interface UserState {
+export interface UserState {
   users: User[];
 }
 
@@ -34,10 +33,15 @@ export const userSlice = createSlice({
       state,
       action: PayloadAction<{ id: string; name: string; email: string }>,
     ) => {
-      const user = state.users.find((user) => user.id === action.payload.id);
-      if (user) {
-        user.email = action.payload.email;
-        user.name = action.payload.name;
+      const userIndex = state.users.findIndex(
+        (user) => user.id === action.payload.id,
+      );
+      if (userIndex !== -1) {
+        state.users[userIndex] = {
+          ...state.users[userIndex],
+          name: action.payload.name,
+          email: action.payload.email,
+        };
       }
     },
     deleteUser: (state, action: PayloadAction<string>) => {
@@ -46,5 +50,5 @@ export const userSlice = createSlice({
   },
 });
 
-export const { addUser, deleteUser, updateUser } = userSlice.actions;
+export const { addUser, updateUser, deleteUser } = userSlice.actions;
 export default userSlice.reducer;

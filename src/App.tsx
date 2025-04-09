@@ -1,12 +1,29 @@
-import "./App.css";
-import { UserManager } from "./components/lists";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { store, persistor } from "./store/store";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
+import ProtectedRoute from "./routes/ProtectedRoute";
 
 function App() {
   return (
-    <div className="flex flex-col items-center m-2">
-      <h1>Happy new year</h1>
-      <UserManager />
-    </div>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <Router>
+          <ToastContainer position="top-center" />
+          <Routes>
+            <Route path="/" element={<Login />} />
+
+            <Route element={<ProtectedRoute />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+            </Route>
+          </Routes>
+        </Router>
+      </PersistGate>
+    </Provider>
   );
 }
 
