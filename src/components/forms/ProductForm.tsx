@@ -1,6 +1,6 @@
 import React from "react";
-import { Button, Input } from "../ui";
 import { useForm } from "react-hook-form";
+import { Button, Input } from "../ui";
 
 export interface ProductFormValues {
   name: string;
@@ -28,12 +28,10 @@ const ProductForm: React.FC<ProductFormProps> = ({
   } = useForm<ProductFormValues>({
     defaultValues,
   });
-
   const handleFormSubmit = (data: ProductFormValues) => {
     onSubmit(data);
     reset();
   };
-
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4 p-4">
       <h3 className="text-xl font-bold m-4">افزودن / ویرایش محصول</h3>
@@ -41,30 +39,27 @@ const ProductForm: React.FC<ProductFormProps> = ({
         <Input
           label="نام محصول"
           placeholder="نام محصول"
-          type="text"
+          {...register("name", { required: "نام محصول الزامی است." })}
           error={errors.name}
-          {...register("name", { required: "نام محصول الزامی است" })}
         />
         <Input
           label="دسته بندی"
-          placeholder="دسته  بندی"
-          type="text"
-          error={errors.category}
+          placeholder="دسته بندی"
           {...register("category", { required: "دسته بندی الزامی است" })}
+          error={errors.category}
         />
         <Input
           label="توضیحات"
           placeholder="توضیحات"
-          type="text"
-          error={errors.description}
           {...register("description", { required: "توضیحات الزامی است" })}
+          error={errors.description}
         />
         <Input
           label="قیمت"
           placeholder="قیمت"
-          error={errors.price}
           type="number"
           {...register("price", { required: "قیمت الزامی است" })}
+          error={errors.price}
         />
         <Input
           label="تعداد"
@@ -81,8 +76,8 @@ const ProductForm: React.FC<ProductFormProps> = ({
           {...register("date", { required: "تاریخ الزامی است" })}
         />
       </div>
-      <div className="flex justify-end mt-4">
-        <Button type="submit" variant="primary" className="px-4 py-2">
+      <div className="flex justify-center m-4">
+        <Button variant="primary" type="submit" className="px-4 py-2">
           ذخیره
         </Button>
       </div>
