@@ -1,4 +1,10 @@
-import React, { useState, useMemo, useTransition, useCallback, useEffect } from "react";
+import React, {
+  useState,
+  useMemo,
+  useTransition,
+  useCallback,
+  useEffect,
+} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import {
@@ -23,7 +29,7 @@ const ProductManager: React.FC = () => {
   // گرفتن محصولات و دسته‌بندی انتخاب‌شده از redux
   const products = useSelector((state: RootState) => state.products.products);
   const selectedCategory = useSelector(
-    (state: RootState) => state.category.selectedCategory
+    (state: RootState) => state.category.selectedCategory,
   );
 
   // مدیریت وضعیت‌ها
@@ -83,7 +89,7 @@ const ProductManager: React.FC = () => {
       handleCloseModal();
       toast.success("محصول با موفقیت اضافه شد!");
     },
-    [dispatch, handleCloseModal]
+    [dispatch, handleCloseModal],
   );
 
   // بروزرسانی محصول
@@ -95,7 +101,7 @@ const ProductManager: React.FC = () => {
         toast.success("محصول با موفقیت بروزرسانی شد!");
       }
     },
-    [dispatch, selectedProduct, handleCloseModal]
+    [dispatch, selectedProduct, handleCloseModal],
   );
 
   // حذف محصول با تأیید کاربر
@@ -119,10 +125,10 @@ const ProductManager: React.FC = () => {
               خیر
             </Button>
           </div>
-        </div>
+        </div>,
       );
     },
-    [dispatch]
+    [dispatch],
   );
 
   return (
