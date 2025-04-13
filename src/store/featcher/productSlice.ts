@@ -1,13 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
+
 export interface Product {
   id: string;
   name: string;
-  price: number;
-  quantity: number;
   description: string;
   date: string;
   category: string;
+  price: number;
+  quantity: number;
 }
 
 interface ProductState {
@@ -28,21 +29,21 @@ export const productSlice = createSlice({
       state,
       action: PayloadAction<{
         name: string;
-        price: number;
-        quantity: number;
-        date: string;
         description: string;
         category: string;
+        date: string;
+        quantity: number;
+        price: number;
       }>,
     ) => {
       const newProduct: Product = {
         id: uuidv4(),
         name: action.payload.name,
-        price: action.payload.price,
-        quantity: action.payload.quantity,
-        date: action.payload.date,
         description: action.payload.description,
         category: action.payload.category,
+        date: action.payload.date,
+        quantity: action.payload.quantity,
+        price: action.payload.price,
       };
       state.products.push(newProduct);
     },
