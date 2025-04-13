@@ -1,16 +1,17 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { v4 as uuidv4 } from "uuid";
-export interface Product {
+import {v4 as uuidv4} from "uuid";
+
+export interface Product{
   id: string;
   name: string;
-  price: number;
-  quantity: number;
   description: string;
   date: string;
   category: string;
+  price: number;
+  quantity: number; 
 }
 
-interface ProductState {
+interface ProductState{
   products: Product[];
   searchQuery: string;
 }
@@ -18,32 +19,30 @@ interface ProductState {
 const initialState: ProductState = {
   products: [],
   searchQuery: "",
-};
+}
 
 export const productSlice = createSlice({
+
   name: "products",
   initialState,
   reducers: {
-    addProduct: (
-      state,
-      action: PayloadAction<{
-        name: string;
-        price: number;
-        quantity: number;
-        date: string;
-        description: string;
-        category: string;
-      }>,
-    ) => {
+    addProduct: (state, action: PayloadAction<{
+      name: string;
+      description: string;
+      category: string;
+      date: string;
+      quantity: number;
+      price: number;
+    }>) =>{
       const newProduct: Product = {
         id: uuidv4(),
         name: action.payload.name,
-        price: action.payload.price,
-        quantity: action.payload.quantity,
-        date: action.payload.date,
         description: action.payload.description,
         category: action.payload.category,
-      };
+        date: action.payload.date,
+        quantity: action.payload.quantity,
+        price: action.payload.price,
+      }
       state.products.push(newProduct);
     },
     updateProduct: (
@@ -68,14 +67,14 @@ export const productSlice = createSlice({
         product.category = action.payload.category;
       }
     },
-    deleteProduct: (state, action: PayloadAction<string>) => {
-      state.products = state.products.filter((p) => p.id !== action.payload);
+    deleteProduct: (state, action: PayloadAction<string>) =>{
+      state.products = state.products.filter((p)=> p.id !== action.payload);
     },
-    setSearchQuery: (state, action: PayloadAction<string>) => {
+    setSearchQuery: (state, action: PayloadAction<string>) =>{
       state.searchQuery = action.payload;
     },
-  },
-});
+  }
+})
 
 export const { addProduct, updateProduct, deleteProduct, setSearchQuery } =
   productSlice.actions;
