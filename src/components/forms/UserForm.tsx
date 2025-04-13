@@ -30,8 +30,7 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit, defaultValues }) => {
       <h2 className="text-lg font-bold text-gray-700">User Form</h2>
       <Input
         label="Name"
-        name="name"
-        register={register}
+        {...register("name", {required: "نام ایزامی میباشد"})}
         error={errors.name}
         placeholder="Enter your name"
         defaultValue={defaultValues?.name}
@@ -39,9 +38,8 @@ const UserForm: React.FC<UserFormProps> = ({ onSubmit, defaultValues }) => {
       />
       <Input
         label="Email"
-        name="email"
         type="email"
-        register={register}
+        {...register("email", {required: "ایمیل الزامی میباشد"})}
         error={errors.email}
         placeholder="Enter your email"
         defaultValue={defaultValues?.email}
