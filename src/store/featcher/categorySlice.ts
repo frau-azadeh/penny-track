@@ -9,6 +9,7 @@ const initialState: CategoryState = {
   categories: ["همه", "غذا", "میوه", "کتاب", "لباس", "سایر"],
   selectedCategory: "همه",
 };
+
 export const categorySlice = createSlice({
   name: "category",
   initialState,
