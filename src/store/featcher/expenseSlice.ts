@@ -1,7 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
-
-// تعریف نوع هزینه
 export interface Expense {
   id: string;
   title: string;
@@ -10,12 +8,11 @@ export interface Expense {
   description: string;
 }
 
-// حالت اولیه هزینه‌ها
 interface ExpenseState {
   expenses: Expense[];
   searchQuery: string;
-  startDate: string | null; // 💡 فیلتر تاریخ شروع
-  endDate: string | null; // 💡 فیلتر تاریخ پایان
+  startDate: string | null;
+  endDate: string | null;
 }
 
 const initialState: ExpenseState = {
@@ -25,8 +22,7 @@ const initialState: ExpenseState = {
   endDate: null,
 };
 
-// ایجاد اسلایس هزینه‌ها
-const expenseSlice = createSlice({
+export const expenseSlice = createSlice({
   name: "expenses",
   initialState,
   reducers: {
@@ -42,12 +38,13 @@ const expenseSlice = createSlice({
       const newExpense: Expense = {
         id: uuidv4(),
         title: action.payload.title,
-        amount: Number(action.payload.amount), // تبدیل به عدد
+        amount: Number(action.payload.amount),
         date: action.payload.date,
         description: action.payload.description,
       };
       state.expenses.push(newExpense);
     },
+
     updateExpense: (
       state,
       action: PayloadAction<{
@@ -68,24 +65,27 @@ const expenseSlice = createSlice({
         expense.description = action.payload.description;
       }
     },
+
     deleteExpense: (state, action: PayloadAction<string>) => {
       state.expenses = state.expenses.filter(
         (exp) => exp.id !== action.payload,
       );
     },
+
     setSearchQuery: (state, action: PayloadAction<string>) => {
       state.searchQuery = action.payload;
     },
+
     setStartDate: (state, action: PayloadAction<string | null>) => {
       state.startDate = action.payload;
     },
+
     setEndDate: (state, action: PayloadAction<string | null>) => {
       state.endDate = action.payload;
     },
   },
 });
 
-// استخراج اکشن‌ها و ریدوسر
 export const {
   addExpense,
   updateExpense,
@@ -94,4 +94,5 @@ export const {
   setStartDate,
   setEndDate,
 } = expenseSlice.actions;
+
 export default expenseSlice.reducer;
