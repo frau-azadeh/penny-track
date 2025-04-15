@@ -1,36 +1,86 @@
-import React, { useState, useTransition } from "react";
-import { useDispatch } from "react-redux";
-import { setSearchQuery } from "../../store/featcher/expenseSlice";
-import { Input } from "../ui";
+import React from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { Button, Input } from '../ui';
 
-const ExpenseForm: React.FC = () => {
-  const [query, setQuery] = useState("");
-  const [isPending, statrtTransition] = useTransition();
-  const dispatch = useDispatch();
+export interface ExpenseFormValues{
+  title: string;
+  amount: number;
+  date: string;
+  description: string;
+}
 
-  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    setQuery(value);
+interface ExpenseFormProps{
+  onSubmit: (data: ExpenseFormValues) => void;
+  defaultValues?: ExpenseFormValues;
+}
 
-    statrtTransition(() => {
-      dispatch(setSearchQuery(value));
-    });
-  };
+const ExpenseForm: React.FC<ExpenseFormProps> = ({
+  onSubmit,
+  defaultValues,
+}) => {
+
+  const {
+    reset,
+    handleSubmit,
+    register,
+    formState: {errors},
+
+  } = useForm<ExpenseFormValues>({
+    defaultValues,
+  })
+
+  const submitHandler: SubmitHandler<ExpenseFormValues> = (data) =>{
+    data.amount = Number(data.amount);
+    onSubmit(data);
+    reset();
+  }
 
   return (
-    <div className="mb-4">
+    <form 
+      onSubmit={handleSubmit(submitHandler)}
+      className='space-y-4 bg-white p-6 rounded-lg shadow-md'
+    >
+      <h2 className='text-lg font-bold text-gray-700'>{defaultValues ? "ویرایش هزینه" : "افزودن هزینه"}</h2>
       <Input
-        label="جستجو"
-        placeholder="نام  مورد نظر را تایپ کنید"
-        value={query}
-        className="w-full"
-        onChange={handleSearch}
+        label='عنوان'
+        {...register("title",{required: "عنوان الزامی است"})}
+        error={errors.title}
+        placeholder='عنوان هزینه را وارد کنید'
+        className='w-full'
       />
-      {isPending && (
-        <p className="text-gray-500">در حال به روز رسانی نتایج ...</p>
-      )}
-    </div>
-  );
-};
 
-export default ExpenseForm;
+      <Input 
+        label='مبلغ'
+        {...register("amount",{required: "مبلغ الزامی است",
+          valueAsNumber: true,
+          min: { value: 1, message: "مبلغ باید بزرگتر از 0 باشد"}
+        })}
+        type='number'
+        error={errors.amount}
+        placeholder='مبلغ را وارد کنید'
+        className='w-full'
+      />
+
+      <Input
+        label='تاریخ'
+        {...register("date", {required: "تاریخ الزامی است"})}
+        type='date'
+        error={errors.date}
+        className='w-full'
+      />
+
+      <Input
+        label='توضیحات'
+        {...register("description", {required: "توضیحات الزامی است"})}
+        error={errors.description}
+        className='w-full'
+        placeholder='توضیحات را وارد کنید'
+      />
+   <Button type='submit' variant='primary' className='w-full'>
+    {defaultValues ? "ویرایش هزینه" : "افزودن هزینه"}
+   </Button>
+    </form>
+  )
+}
+
+export default ExpenseForm
