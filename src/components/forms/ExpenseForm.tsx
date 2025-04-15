@@ -1,6 +1,6 @@
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Input, Button } from "../ui";
+import { Button, Input } from "../ui";
 
 export interface ExpenseFormValues {
   title: string;
@@ -19,19 +19,18 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({
   defaultValues,
 }) => {
   const {
-    register,
-    handleSubmit,
-    formState: { errors },
     reset,
+    handleSubmit,
+    register,
+    formState: { errors },
   } = useForm<ExpenseFormValues>({
     defaultValues,
   });
 
   const submitHandler: SubmitHandler<ExpenseFormValues> = (data) => {
-    // تبدیل مقدار amount به عدد
     data.amount = Number(data.amount);
     onSubmit(data);
-    reset(); // پاک کردن فرم بعد از ارسال
+    reset();
   };
 
   return (
@@ -40,11 +39,8 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({
       className="space-y-4 bg-white p-6 rounded-lg shadow-md"
     >
       <h2 className="text-lg font-bold text-gray-700">
-        {defaultValues ? "Update Expense" : "Add Expense"}
+        {defaultValues ? "ویرایش هزینه" : "افزودن هزینه"}
       </h2>
-
-      {/* فیلد عنوان */}
-      {/* فیلد عنوان */}
       <Input
         label="عنوان"
         {...register("title", { required: "عنوان الزامی است" })}
@@ -53,8 +49,6 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({
         className="w-full"
       />
 
-      {/* فیلد مبلغ */}
-      {/* فیلد مبلغ */}
       <Input
         label="مبلغ"
         {...register("amount", {
@@ -68,7 +62,6 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({
         className="w-full"
       />
 
-      {/* فیلد تاریخ */}
       <Input
         label="تاریخ"
         {...register("date", { required: "تاریخ الزامی است" })}
@@ -77,17 +70,13 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({
         className="w-full"
       />
 
-      {/* فیلد توضیحات */}
       <Input
         label="توضیحات"
         {...register("description", { required: "توضیحات الزامی است" })}
-        type="text"
         error={errors.description}
-        placeholder="توضیحات را وارد کنید"
         className="w-full"
+        placeholder="توضیحات را وارد کنید"
       />
-
-      {/* دکمه ثبت */}
       <Button type="submit" variant="primary" className="w-full">
         {defaultValues ? "ویرایش هزینه" : "افزودن هزینه"}
       </Button>
