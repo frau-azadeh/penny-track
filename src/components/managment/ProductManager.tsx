@@ -169,7 +169,7 @@ const ProductManager: React.FC = () => {
       {/* صفحه‌بندی */}
       <Pagination
         currentPage={currentPage}
-        totalPages={Math.ceil(filteredProducts.length / ITEMS_PER_PAGE)}
+        totalPage={Math.ceil(filteredProducts.length / ITEMS_PER_PAGE)}
         onPageChange={handlePageChange}
       />
 
