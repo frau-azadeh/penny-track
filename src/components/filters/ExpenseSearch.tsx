@@ -1,7 +1,9 @@
 import React, { useState, useTransition } from "react";
+
+import { useDispatch } from "react-redux";
+
 import { setSearchQuery } from "../../store/featcher/expenseSlice";
 import { Input } from "../ui";
-import { useDispatch } from "react-redux";
 
 const ExpenseSearch: React.FC = () => {
   const [query, setQuery] = useState("");

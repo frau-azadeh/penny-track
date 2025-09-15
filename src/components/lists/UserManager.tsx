@@ -1,10 +1,12 @@
 import React from "react";
-import { Button, Modal } from "../ui";
-import { UserForm } from "../forms";
-import { useDispatch } from "react-redux";
-import { addUser } from "../../store/featcher/userSlice";
 import { useState } from "react";
+
+import { useDispatch } from "react-redux";
+
+import { addUser } from "../../store/featcher/userSlice";
+import { UserForm } from "../forms";
 import type { UserFormValues } from "../forms/UserForm";
+import { Button, Modal } from "../ui";
 
 const UserManager: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);

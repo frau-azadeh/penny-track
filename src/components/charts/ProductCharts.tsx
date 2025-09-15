@@ -1,15 +1,17 @@
 import React from "react";
+
 import { useSelector } from "react-redux";
-import { RootState } from "../../store/store";
 import {
-  BarChart,
   Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
+  BarChart,
   Legend,
   ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
 } from "recharts";
+
+import { RootState } from "../../store/store";
 
 const ProductCharts: React.FC = () => {
   const products = useSelector((state: RootState) => state.products.products);

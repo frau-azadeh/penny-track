@@ -1,11 +1,12 @@
-import { persistReducer, persistStore } from "redux-persist";
 import { configureStore } from "@reduxjs/toolkit";
+import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import userReducer from "./featcher/userSlice";
+
+import authReducer from "./featcher/authSlice";
+import categoryReducer from "./featcher/categorySlice";
 import expenseReducer from "./featcher/expenseSlice";
 import productReducer from "./featcher/productSlice";
-import categoryReducer from "./featcher/categorySlice";
-import authReducer from "./featcher/authSlice";
+import userReducer from "./featcher/userSlice";
 import authMiddleware from "./middleware/authMiddleware";
 
 const persistConfig = {

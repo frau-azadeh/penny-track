@@ -1,7 +1,10 @@
 import React, { useCallback, useMemo } from "react";
+
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store/store";
+
 import { selectCategory } from "../../store/featcher/categorySlice";
+import { RootState } from "../../store/store";
+
 const CategoryFilter: React.FC = () => {
   const dispatch = useDispatch();
 

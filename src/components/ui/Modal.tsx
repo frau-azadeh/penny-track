@@ -1,5 +1,6 @@
 import React, { ReactNode } from "react";
 import { createPortal } from "react-dom";
+
 import Button from "./Button";
 
 interface ModalProps {

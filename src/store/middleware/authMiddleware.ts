@@ -1,6 +1,8 @@
-import { Middleware, isAnyOf } from "@reduxjs/toolkit";
-import { login, logout } from "../featcher/authSlice";
 import { toast } from "react-toastify";
+
+import { Middleware, isAnyOf } from "@reduxjs/toolkit";
+
+import { login, logout } from "../featcher/authSlice";
 import type { AppDispatch } from "../store";
 
 const authMiddleware: Middleware = (store) => (next) => (action) => {
