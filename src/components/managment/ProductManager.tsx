@@ -1,24 +1,27 @@
 import React, {
-  useState,
-  useMemo,
-  useTransition,
   useCallback,
   useEffect,
+  useMemo,
+  useState,
+  useTransition,
 } from "react";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store/store";
+
 import {
   Product,
   addProduct,
-  updateProduct,
   deleteProduct,
+  updateProduct,
 } from "../../store/featcher/productSlice";
-import { Button, Modal, Input, Pagination } from "../ui";
+import { RootState } from "../../store/store";
+import CategoryFilter from "../filters/CategoryFilter";
 import ProductForm, { ProductFormValues } from "../forms/ProductForm";
 import ProductTable from "../tables/ProductTable";
-import CategoryFilter from "../filters/CategoryFilter";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { Button, Input, Modal, Pagination } from "../ui";
 
 // تعداد آیتم‌ها در هر صفحه
 const ITEMS_PER_PAGE = 5;

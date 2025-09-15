@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+
 import { useDispatch } from "react-redux";
+
 import { addExpense } from "../../store/featcher/expenseSlice";
-import { Button, Modal } from "../ui";
 import ExpenseForm, { ExpenseFormValues } from "../forms/ExpenseForm";
 import ExpenseList from "../lists/ExpenseList";
 import TotalExpense from "../lists/TotalExpense";
+import { Button, Modal } from "../ui";
 
 const ExpenseManager: React.FC = () => {
   const dispatch = useDispatch();

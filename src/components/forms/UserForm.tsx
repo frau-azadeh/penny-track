@@ -1,6 +1,9 @@
 import React from "react";
+
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Input, Button } from "../ui";
+
+import { Button, Input } from "../ui";
+
 export interface UserFormValues {
   name: string;
   email: string;

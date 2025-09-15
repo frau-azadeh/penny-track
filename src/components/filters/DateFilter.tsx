@@ -1,6 +1,8 @@
 import React, { useState, useTransition } from "react";
+
 import { useDispatch } from "react-redux";
-import { setStartDate, setEndDate } from "../../store/featcher/expenseSlice";
+
+import { setEndDate, setStartDate } from "../../store/featcher/expenseSlice";
 
 const DateFilter: React.FC = () => {
   const [startDate, setStartDateValue] = useState<string>("");

@@ -1,12 +1,14 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { store, persistor } from "./store/store";
-import Login from "./pages/Login";
+
+import { Provider } from "react-redux";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { PersistGate } from "redux-persist/integration/react";
+
 import Dashboard from "./pages/Dashboard";
+import Login from "./pages/Login";
 import ProtectedRoute from "./routes/ProtectedRoute";
+import { persistor, store } from "./store/store";
 
 function App() {
   return (

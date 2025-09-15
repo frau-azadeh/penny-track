@@ -1,7 +1,9 @@
 import React from "react";
+
 import * as XLSX from "xlsx";
-import { Button } from "../ui";
+
 import { Product } from "../../store/featcher/productSlice";
+import { Button } from "../ui";
 
 interface DownloadExcelProps {
   products: Product[];

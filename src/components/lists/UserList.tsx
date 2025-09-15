@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+
+import { useDispatch, useSelector } from "react-redux";
+
+import { User, deleteUser, updateUser } from "../../store/featcher/userSlice";
 import { RootState } from "../../store/store";
-import { deleteUser, updateUser, User } from "../../store/featcher/userSlice";
-import { Button, Modal } from "../ui";
 import UserForm, { UserFormValues } from "../forms/UserForm";
+import { Button, Modal } from "../ui";
 
 const UserList: React.FC = () => {
   const dispatch = useDispatch();
